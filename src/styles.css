@@ -105,7 +105,8 @@
   body {
     overflow-x: clip;
     min-height: 100dvh;
-    background-color: var(--color-background);
+    /* transparente: o fundo vem do <html>, para as camadas fixas da cena (z-index negativo) ficarem visíveis */
+    background-color: transparent;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
@@ -320,6 +321,7 @@
   pointer-events: none;
   background:
     radial-gradient(120% 90% at 50% 45%, transparent 40%, oklch(0.1 0.015 255 / 0.75) 100%),
+    linear-gradient(90deg, oklch(0.1 0.015 255 / 0.5), transparent 55%),
     linear-gradient(
       180deg,
       oklch(0.1 0.015 255 / 0.55),
@@ -331,6 +333,9 @@
 
 /* ——— Loader ——— */
 .loader {
+  display: none;
+}
+.js .loader {
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -366,6 +371,25 @@
     background-position: -200% 0;
   }
 }
+.loader-mark .loader-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: loader-draw 1.1s var(--ease-out-expo) 0.35s forwards;
+}
+.loader-mark .loader-dots {
+  opacity: 0;
+  animation: loader-fade 0.6s ease-out forwards;
+}
+@keyframes loader-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes loader-fade {
+  to {
+    opacity: 1;
+  }
+}
 .loader-word {
   background: linear-gradient(
     90deg,
@@ -399,5 +423,11 @@
   }
   [data-spot]::after {
     transition: none;
+  }
+  .loader-mark .loader-line,
+  .loader-mark .loader-dots {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }

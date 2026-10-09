@@ -15,6 +15,8 @@ import {
   Services,
   Tools,
 } from "@/components/site/Sections";
+import { Loader } from "@/components/site/Loader";
+import { SceneRoot } from "@/components/scene/SceneRoot";
 import { useSpotlight } from "@/hooks/use-spotlight";
 import { CONTACT } from "@/content/site";
 
@@ -72,7 +74,8 @@ function Index() {
   useSpotlight();
   return (
     <>
-      <div className="backdrop" aria-hidden="true" />
+      <Loader />
+      <SceneRoot />
       <Header />
       <main id="conteudo">
         <Hero />
