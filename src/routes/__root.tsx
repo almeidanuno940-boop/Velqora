@@ -15,17 +15,19 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center px-5">
+      <div className="backdrop" aria-hidden="true" />
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <p className="eyebrow">Erro 404</p>
+        <h1 className="headline mt-5 text-[7rem] text-gradient">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           A página que procura não existe ou foi movida.
         </p>
-        <div className="mt-6">
+        <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-all hover:-translate-y-0.5"
           >
             Ir para o início
           </Link>
@@ -43,11 +45,10 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center px-5">
+      <div className="backdrop" aria-hidden="true" />
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
+        <h1 className="headline text-5xl text-foreground">Esta página não carregou</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Ocorreu um problema ao carregar a página. Pode tentar novamente ou voltar ao início.
         </p>
@@ -82,6 +83,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#06090f" },
       { name: "color-scheme", content: "dark" },
     ],
+    // Marca o documento como "com JS" antes da pintura: só assim os reveals escondem conteúdo.
+    scripts: [{ children: "document.documentElement.classList.add('js')" }],
     links: [
       {
         rel: "stylesheet",
@@ -106,7 +109,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-PT">
+    <html lang="pt-PT" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

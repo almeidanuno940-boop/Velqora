@@ -7,7 +7,7 @@ import { CONTACT, SERVICE_OPTIONS } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 const field =
-  "w-full rounded-xl border border-input bg-background px-4 py-3 text-base sm:text-sm transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/20";
+  "w-full rounded-xl border border-input bg-[oklch(0.12_0.016_255/0.8)] px-4 py-3 text-base text-foreground transition-all duration-300 placeholder:text-muted-foreground/60 hover:border-white/25 focus:border-primary/70 focus:outline-none focus:ring-4 focus:ring-primary/15 sm:text-sm";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "ok" | "error" | "unconfigured">("idle");
@@ -48,10 +48,7 @@ export function ContactForm() {
 
   if (status === "ok") {
     return (
-      <div
-        role="status"
-        className="flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center shadow-soft"
-      >
+      <div role="status" className="panel flex flex-col items-center p-10 text-center">
         <CheckCircle2 className="size-12 text-primary" />
         <p className="mt-4 text-lg font-medium">
           Obrigado. O seu pedido foi recebido. Entraremos em contacto brevemente.
@@ -82,8 +79,14 @@ export function ContactForm() {
     children: string;
     optional?: boolean;
   }) => (
-    <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium">
-      {children} {optional && <span className="font-normal text-muted-foreground">(opcional)</span>}
+    <label
+      htmlFor={htmlFor}
+      className="mb-2 block font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/85"
+    >
+      {children}{" "}
+      {optional && (
+        <span className="normal-case tracking-normal text-muted-foreground">(opcional)</span>
+      )}
     </label>
   );
 
@@ -93,11 +96,7 @@ export function ContactForm() {
   });
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-      className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="panel space-y-5 p-6 sm:p-9">
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <L htmlFor="nome">Nome</L>
@@ -156,11 +155,11 @@ export function ContactForm() {
           {...aria("servico")}
           {...register("servico")}
         >
-          <option value="" disabled>
+          <option value="" disabled className="bg-popover">
             Selecione uma opção
           </option>
           {SERVICE_OPTIONS.map((s) => (
-            <option key={s} value={s}>
+            <option key={s} value={s} className="bg-popover">
               {s}
             </option>
           ))}
@@ -180,15 +179,24 @@ export function ContactForm() {
         <Err name="mensagem" />
       </div>
       {status === "error" && (
-        <p role="alert" className="rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive">
+        <p
+          role="alert"
+          className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+        >
           Não foi possível enviar o pedido. Tente novamente ou contacte-me por email ou telefone.
         </p>
       )}
       {status === "unconfigured" && (
-        <p role="status" className="rounded-xl bg-accent px-4 py-3 text-sm text-accent-foreground">
+        <p
+          role="status"
+          className="rounded-xl border border-primary/25 bg-primary/10 px-4 py-3 text-sm text-foreground/90"
+        >
           O formulário ainda não está ligado a um serviço de envio. Os dados introduzidos não foram
           enviados.{" "}
-          <a className="font-semibold underline" href={fallbackHref}>
+          <a
+            className="font-semibold text-primary underline underline-offset-4"
+            href={fallbackHref}
+          >
             Abrir email com o pedido preenchido
           </a>{" "}
           ou contacte-nos por telefone.
@@ -197,7 +205,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-70"
+        className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground transition-all duration-500 ease-out-expo hover:shadow-[0_12px_40px_-10px_oklch(0.87_0.13_178/0.7)] disabled:opacity-70"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" />}
         {isSubmitting ? "A enviar…" : "Pedir uma demonstração"}

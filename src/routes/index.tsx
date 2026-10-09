@@ -15,6 +15,7 @@ import {
   Services,
   Tools,
 } from "@/components/site/Sections";
+import { useSpotlight } from "@/hooks/use-spotlight";
 import { CONTACT } from "@/content/site";
 
 const TITLE = "Velqora | Automação, IA e Data Analytics para Empresas";
@@ -68,10 +69,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useSpotlight();
   return (
     <>
+      <div className="backdrop" aria-hidden="true" />
       <Header />
-      <main>
+      <main id="conteudo">
         <Hero />
         <Problem />
         <Services />

@@ -16,7 +16,14 @@ export function LogoMark({ className }: { className?: string }) {
       focusable="false"
     >
       <defs>
-        <linearGradient id={`${id}-r`} x1="24" y1="39" x2="40" y2="8" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id={`${id}-r`}
+          x1="24"
+          y1="39"
+          x2="40"
+          y2="8"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#5eead4" />
           <stop offset="1" stopColor="#7dd3fc" />
         </linearGradient>
