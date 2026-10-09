@@ -1,38 +1,11 @@
-import { useEffect, useRef } from "react";
-import { onSceneReady } from "@/components/scene/store";
-
 /**
- * Ecrã de carregamento: aparece só com JS ativo, desaparece quando a cena 3D
- * pinta os primeiros frames (ou ao fim de 3,5 s; o CSS tem ainda um failsafe).
+ * Ecrã de carregamento: só aparece com JS ativo e é 100% CSS (tempo fixo, ver `--intro-at`).
+ * Não espera pela cena 3D — esta entra depois com fade — nem bloqueia o conteúdo em
+ * dispositivos lentos.
  */
 export function Loader() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const started = performance.now();
-    el.style.setProperty("--p", "0.45");
-    let timer = 0;
-    const finish = () => {
-      // tempo mínimo de exibição para a animação não "piscar"
-      const wait = Math.max(0, 900 - (performance.now() - started));
-      timer = window.setTimeout(() => {
-        el.style.setProperty("--p", "1");
-        window.setTimeout(() => el.classList.add("is-done"), 380);
-      }, wait);
-    };
-    const off = onSceneReady(finish);
-    const failsafe = window.setTimeout(finish, 3500);
-    return () => {
-      off();
-      window.clearTimeout(timer);
-      window.clearTimeout(failsafe);
-    };
-  }, []);
-
   return (
-    <div ref={ref} className="loader" aria-hidden="true">
+    <div className="loader" aria-hidden="true">
       <div className="flex flex-col items-center">
         <svg viewBox="0 0 48 48" className="loader-mark size-16" fill="none">
           <defs>

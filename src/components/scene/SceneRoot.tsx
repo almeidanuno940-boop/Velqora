@@ -1,5 +1,5 @@
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react";
-import { detectTier, detectWebGL, signalSceneReady, startSceneTracking, type Tier } from "./store";
+import { detectTier, detectWebGL, startSceneTracking, type Tier } from "./store";
 import { SceneFallback } from "./SceneFallback";
 
 const Experience = lazy(() => import("./Experience"));
@@ -37,11 +37,26 @@ export function SceneRoot() {
     const force = params.get("scene") === "force";
     if (params.get("scene") === "off" || !gl.ok || (gl.software && !force)) {
       setMode({ kind: "static" });
-      signalSceneReady();
-    } else {
-      setMode({ kind: "webgl", tier: detectTier(), reduced });
+      return stop;
     }
-    return stop;
+    // a cena só arranca depois do "load" e com o browser livre: não compete com o conteúdo
+    let idle = 0;
+    let timer = 0;
+    const start = () => setMode({ kind: "webgl", tier: detectTier(), reduced });
+    const whenIdle = () => {
+      // Safari ainda não tem requestIdleCallback
+      const ric = (window as Partial<Window>).requestIdleCallback?.bind(window);
+      if (ric) idle = ric(start, { timeout: 1500 });
+      else timer = window.setTimeout(start, 200);
+    };
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
+    return () => {
+      stop();
+      window.removeEventListener("load", whenIdle);
+      if (idle) window.cancelIdleCallback(idle);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -49,12 +64,7 @@ export function SceneRoot() {
       <div className="backdrop" aria-hidden="true" />
       {mode.kind === "static" && <SceneFallback />}
       {mode.kind === "webgl" && (
-        <SceneBoundary
-          onError={() => {
-            setMode({ kind: "static" });
-            signalSceneReady();
-          }}
-        >
+        <SceneBoundary onError={() => setMode({ kind: "static" })}>
           <Suspense fallback={null}>
             <Experience tier={mode.tier} reduced={mode.reduced} />
           </Suspense>

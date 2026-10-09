@@ -81,27 +81,6 @@ export function startSceneTracking() {
   };
 }
 
-/* ——— Sinal "cena pronta" para o loader ——— */
-
-let ready = false;
-const listeners = new Set<() => void>();
-
-export function signalSceneReady() {
-  if (ready) return;
-  ready = true;
-  listeners.forEach((l) => l());
-  listeners.clear();
-}
-
-export function onSceneReady(cb: () => void) {
-  if (ready) {
-    cb();
-    return () => {};
-  }
-  listeners.add(cb);
-  return () => listeners.delete(cb);
-}
-
 /* ——— Capacidades do dispositivo ——— */
 
 export function detectWebGL(): { ok: boolean; software: boolean; renderer: string } {

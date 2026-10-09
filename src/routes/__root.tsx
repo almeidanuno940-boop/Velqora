@@ -11,11 +11,18 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+// fontes críticas do primeiro ecrã: pré-carregadas para o título do hero não esperar pelo CSS
+import serifFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
+import serifItalicFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url";
+import sansFont from "@fontsource/geist/files/geist-latin-400-normal.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-5">
+      {/* React 19 eleva title/meta para o <head> */}
+      <title>Página não encontrada | Velqora</title>
+      <meta name="robots" content="noindex" />
       <div className="backdrop" aria-hidden="true" />
       <div className="max-w-md text-center">
         <p className="eyebrow">Erro 404</p>
@@ -93,12 +100,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "apple-touch-icon", href: "/favicon.svg" },
       { rel: "manifest", href: "/site.webmanifest" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
-      },
+      ...[serifFont, serifItalicFont, sansFont].map((href) => ({
+        rel: "preload",
+        href,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous" as const,
+      })),
     ],
   }),
   shellComponent: RootShell,

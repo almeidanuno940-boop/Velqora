@@ -4,11 +4,43 @@ import * as THREE from "three";
 import { COLORS, CORE_Z } from "./world";
 
 /**
- * O Núcleo: um cristal facetado (a IA) que recebe o caos e devolve ordem.
- * Vidro escuro e facetado (sem refração, para o núcleo luminoso se ler como um só ponto);
- * no nível "high" ganha clearcoat e uma leve iridescência.
+ * Matcap procedural: uma esfera de estúdio pintada em canvas (luz ciano em cima, âmbar em
+ * baixo, um brilho branco). Dá reflexos de vidro às facetas sem ambiente HDR nem PMREM —
+ * cuja compilação de shaders bloqueava o arranque.
  */
-export function Core({ tier }: { tier: "high" | "low" }) {
+function makeMatcap() {
+  const size = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext("2d")!;
+  const c = size / 2;
+  const blob = (x: number, y: number, r: number, color: string) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, color);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, size, size);
+  };
+  ctx.fillStyle = "#04100f";
+  ctx.fillRect(0, 0, size, size);
+  ctx.globalCompositeOperation = "lighter";
+  blob(c * 0.55, c * 0.45, c * 0.95, "rgba(94,234,212,0.55)");
+  blob(c * 1.5, c * 1.55, c * 0.7, "rgba(255,170,90,0.4)");
+  blob(c * 1.45, c * 0.5, c * 0.5, "rgba(125,211,252,0.35)");
+  blob(c * 0.62, c * 0.5, c * 0.16, "rgba(255,255,255,0.9)");
+  // aro de fresnel: as facetas de perfil ficam mais claras
+  const rim = ctx.createRadialGradient(c, c, c * 0.72, c, c, c);
+  rim.addColorStop(0, "rgba(0,0,0,0)");
+  rim.addColorStop(1, "rgba(160,255,240,0.35)");
+  ctx.fillStyle = rim;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+/** O Núcleo: um cristal facetado (a IA) que recebe o caos e devolve ordem. */
+export function Core() {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Group>(null);
   const inner = useRef<THREE.LineSegments>(null);
@@ -23,6 +55,8 @@ export function Core({ tier }: { tier: "high" | "low" }) {
       innerGeo: new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.72, 1)),
     };
   }, []);
+
+  const matcap = useMemo(makeMatcap, []);
 
   const ringMat = useMemo(
     () =>
@@ -61,9 +95,6 @@ export function Core({ tier }: { tier: "high" | "low" }) {
 
   return (
     <group ref={group} position={[0, 0.45, CORE_Z]}>
-      {/* luz que o núcleo projeta no chão e nos portais */}
-      <pointLight color={COLORS.mint} intensity={18} distance={16} decay={1.6} />
-
       <mesh>
         <sphereGeometry args={[0.17, 24, 24]} />
         <meshBasicMaterial ref={glow} toneMapped={false} />
@@ -79,33 +110,13 @@ export function Core({ tier }: { tier: "high" | "low" }) {
 
       <group ref={shell}>
         <mesh geometry={shellGeo}>
-          {tier === "high" ? (
-            <meshPhysicalMaterial
-              color="#0c2a2c"
-              metalness={0.2}
-              roughness={0.06}
-              clearcoat={1}
-              clearcoatRoughness={0.04}
-              iridescence={0.35}
-              iridescenceIOR={1.3}
-              transparent
-              opacity={0.42}
-              envMapIntensity={2.4}
-              flatShading
-              depthWrite={false}
-            />
-          ) : (
-            <meshStandardMaterial
-              color="#0c2a2c"
-              metalness={0.3}
-              roughness={0.08}
-              transparent
-              opacity={0.42}
-              envMapIntensity={2.2}
-              flatShading
-              depthWrite={false}
-            />
-          )}
+          <meshMatcapMaterial
+            matcap={matcap}
+            transparent
+            opacity={0.55}
+            flatShading
+            depthWrite={false}
+          />
         </mesh>
         <lineSegments geometry={edgesGeo}>
           <lineBasicMaterial color="#c8fff6" transparent opacity={0.35} toneMapped={false} />

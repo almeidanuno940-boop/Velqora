@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Lightformer, PerformanceMonitor } from "@react-three/drei";
+import { PerformanceMonitor } from "@react-three/drei";
 import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from "@react-three/postprocessing";
 import { BlendFunction, ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
-import { sceneState, signalSceneReady, type Tier } from "./store";
+import { sceneState, type Tier } from "./store";
 import { COLORS, buildCurves, shared } from "./world";
 import { FlowParticles } from "./FlowParticles";
 import { Core } from "./Core";
@@ -77,14 +77,10 @@ function CameraRig({ reduced }: { reduced: boolean }) {
 /** Relógio da cena (congelado em movimento reduzido) + métricas de depuração. */
 function Clock({ reduced, tier }: { reduced: boolean; tier: Tier }) {
   const { gl } = useThree();
-  const frames = useRef(0);
   const acc = useRef({ n: 0, t: 0 });
   useFrame((state, delta) => {
     shared.uTime.value = reduced ? 14 : state.clock.elapsedTime;
     shared.uPixelRatio.value = gl.getPixelRatio();
-    frames.current++;
-    // em "demand" (movimento reduzido) só há um frame; no modo normal espera 3 frames estáveis
-    if (frames.current === (reduced ? 1 : 3)) signalSceneReady();
     acc.current.n++;
     acc.current.t += delta;
     if (acc.current.t >= 1) {
@@ -102,34 +98,34 @@ function Clock({ reduced, tier }: { reduced: boolean; tier: Tier }) {
   return null;
 }
 
-function Studio() {
-  // ambiente procedural (sem HDRIs externos) — só serve os reflexos do cristal
-  return (
-    <Environment resolution={128} frames={1}>
-      <Lightformer
-        form="rect"
-        intensity={3}
-        color="#5eead4"
-        position={[-4, 2, 3]}
-        scale={[6, 2, 1]}
-      />
-      <Lightformer
-        form="rect"
-        intensity={2.4}
-        color="#ffb067"
-        position={[5, -1, 4]}
-        scale={[4, 3, 1]}
-      />
-      <Lightformer form="ring" intensity={4} color="#ffffff" position={[0, 6, -3]} scale={3} />
-      <Lightformer
-        form="rect"
-        intensity={1.2}
-        color="#7dd3fc"
-        position={[0, 0, -8]}
-        scale={[10, 4, 1]}
-      />
-    </Environment>
-  );
+/**
+ * Compila todos os shaders em paralelo (KHR_parallel_shader_compile) antes do primeiro frame,
+ * em vez de bloquear a thread principal na primeira renderização.
+ * Com pós-processamento a cena é desenhada num render target, onde o three.js usa outras
+ * variantes dos shaders (sem tone mapping, saída linear): compilamos essas.
+ */
+function Warmup({ offscreen, onDone }: { offscreen: boolean; onDone: () => void }) {
+  const { gl, scene, camera, invalidate } = useThree();
+  useEffect(() => {
+    let alive = true;
+    const rt = offscreen ? new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType }) : null;
+    const previous = gl.getRenderTarget();
+    gl.setRenderTarget(rt);
+    const compiling = gl.compileAsync(scene, camera);
+    gl.setRenderTarget(previous);
+    compiling
+      .catch(() => undefined)
+      .finally(() => {
+        rt?.dispose();
+        if (!alive) return;
+        onDone();
+        requestAnimationFrame(() => invalidate());
+      });
+    return () => {
+      alive = false;
+    };
+  }, [gl, scene, camera, invalidate, offscreen, onDone]);
+  return null;
 }
 
 function World({ tier, reduced }: Props) {
@@ -141,10 +137,8 @@ function World({ tier, reduced }: Props) {
       <Motes count={high ? 1400 : 600} />
       <FlowParticles count={high ? 9000 : 3500} size={high ? 1 : 1.25} />
       <Gates />
-      <Core tier={tier} />
+      <Core />
       <DataCity spacing={high ? 1.05 : 1.6} />
-      <Studio />
-      <ambientLight intensity={0.15} />
       <CameraRig reduced={reduced} />
       <Clock reduced={reduced} tier={tier} />
     </>
@@ -169,7 +163,18 @@ function Effects() {
 }
 
 export default function Experience({ tier, reduced }: Props) {
+  const [compiled, setCompiled] = useState(false);
   const [visible, setVisible] = useState(false);
+  const onCompiled = useCallback(() => setCompiled(true), []);
+
+  // só mostra o canvas quando já há frames reais (fade sobre o fundo CSS)
+  useEffect(() => {
+    if (!compiled) return;
+    let id = requestAnimationFrame(() => {
+      id = requestAnimationFrame(() => setVisible(true));
+    });
+    return () => cancelAnimationFrame(id);
+  }, [compiled]);
   const [fx, setFx] = useState(tier === "high");
   const [dprMax, setDprMax] = useState(tier === "high" ? 1.5 : 1.25);
 
@@ -181,7 +186,7 @@ export default function Experience({ tier, reduced }: Props) {
     >
       <Canvas
         dpr={[1, dprMax]}
-        frameloop={reduced ? "demand" : "always"}
+        frameloop={!compiled ? "never" : reduced ? "demand" : "always"}
         camera={{ fov: 48, near: 0.1, far: 420, position: [0, 0.75, 15.5] }}
         gl={{
           antialias: tier !== "high",
@@ -190,10 +195,11 @@ export default function Experience({ tier, reduced }: Props) {
           powerPreference: "high-performance",
         }}
         onCreated={({ gl, scene }) => {
+          // em produção não lemos os logs dos shaders (cada leitura espera pela compilação)
+          gl.debug.checkShaderErrors = import.meta.env.DEV;
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;
           scene.background = COLORS.fogNight.clone();
-          requestAnimationFrame(() => setVisible(true));
           gl.domElement.addEventListener("webglcontextlost", (e) => e.preventDefault());
         }}
       >
@@ -207,6 +213,7 @@ export default function Experience({ tier, reduced }: Props) {
           />
         )}
         <World tier={tier} reduced={reduced} />
+        <Warmup offscreen={fx} onDone={onCompiled} />
         {fx && <Effects />}
       </Canvas>
     </div>

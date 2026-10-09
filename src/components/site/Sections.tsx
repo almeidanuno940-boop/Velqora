@@ -54,16 +54,17 @@ export function Hero() {
     >
       <div className={cn(wrap, "grid w-full items-end gap-12 lg:grid-cols-[1fr_auto]")}>
         <div className="max-w-4xl">
-          <Reveal>
+          <Reveal intro>
             <p className="eyebrow">Velqora · Automation &amp; Data Solutions</p>
           </Reveal>
           <SplitHeading
+            intro
             as="h1"
             text={"Automatize o trabalho.\n_Transforme os seus dados._"}
             className="mt-6 text-[3.15rem] sm:text-7xl lg:text-[6.4rem] xl:text-[7.2rem]"
             delay={120}
           />
-          <Reveal delay={350}>
+          <Reveal intro delay={350}>
             <p className="mt-7 font-mono text-xs uppercase tracking-[0.2em] text-ember">
               Automatize. Simplifique. Cresça.
             </p>
@@ -73,7 +74,7 @@ export function Hero() {
               eficiente.
             </p>
           </Reveal>
-          <Reveal delay={480} className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <Reveal intro delay={480} className="mt-9 flex flex-col gap-3 sm:flex-row">
             <CtaLink href="#contacto" arrow>
               Pedir uma demonstração
             </CtaLink>
@@ -82,6 +83,7 @@ export function Hero() {
             </CtaLink>
           </Reveal>
           <Reveal
+            intro
             delay={600}
             className="mt-9 flex flex-col gap-2.5 text-sm text-muted-foreground sm:flex-row sm:gap-7"
           >
@@ -102,7 +104,7 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={700} className="hidden lg:block">
+        <Reveal intro delay={700} className="hidden lg:block">
           <div className="panel w-72 !bg-[oklch(0.15_0.02_253/0.6)] p-4 backdrop-blur-md">
             <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
               <span>Workflow · Leads</span>

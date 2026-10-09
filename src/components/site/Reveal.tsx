@@ -24,12 +24,13 @@ function observe(el: Element) {
   return () => sharedObserver?.unobserve(el);
 }
 
-function useReveal<T extends HTMLElement>() {
+/** `intro`: entrada por CSS no carregamento (hero), sem esperar pelo JS. */
+function useReveal<T extends HTMLElement>(intro = false) {
   const ref = useRef<T>(null);
   useEffect(() => {
     const el = ref.current;
-    return el ? observe(el) : undefined;
-  }, []);
+    return el && !intro ? observe(el) : undefined;
+  }, [intro]);
   return ref;
 }
 
@@ -38,17 +39,22 @@ export function Reveal({
   className,
   delay = 0,
   as = "div",
+  intro,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   as?: "div" | "li";
+  intro?: boolean;
 }) {
-  const ref = useReveal<HTMLDivElement>();
+  const ref = useReveal<HTMLDivElement>(intro);
   // o JSX global do R3F torna ElementType demasiado largo; a tag é sempre um elemento de bloco
   const Tag = as as "div";
+  const style = (
+    intro ? { "--delay": `${delay}ms` } : { transitionDelay: `${delay}ms` }
+  ) as CSSProperties;
   return (
-    <Tag ref={ref} className={cn("reveal", className)} style={{ transitionDelay: `${delay}ms` }}>
+    <Tag ref={ref} className={cn("reveal", intro && "intro", className)} style={style}>
       {children}
     </Tag>
   );
@@ -63,20 +69,22 @@ export function SplitHeading({
   as = "h2",
   className,
   delay = 0,
+  intro,
 }: {
   text: string;
   as?: "h1" | "h2" | "h3";
   className?: string;
   delay?: number;
+  intro?: boolean;
 }) {
-  const ref = useReveal<HTMLHeadingElement>();
+  const ref = useReveal<HTMLHeadingElement>(intro);
   const Tag = as as "h2";
   let w = 0;
   const parts = text.split("_");
   return (
     <Tag
       ref={ref}
-      className={cn("split headline", className)}
+      className={cn("split headline", intro && "intro", className)}
       style={{ "--d": `${delay}ms` } as CSSProperties}
       aria-label={text.replaceAll("_", "")}
     >
