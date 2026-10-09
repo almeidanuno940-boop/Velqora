@@ -5,12 +5,12 @@ import { CONTACT } from "@/content/site";
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidade | NexaFlow" },
+      { title: "Política de Privacidade | Velqora" },
       {
         name: "description",
-        content: "Política de Privacidade do website NexaFlow — Automation & Data Solutions.",
+        content: "Política de Privacidade do website Velqora — Automation & Data Solutions.",
       },
-      { property: "og:title", content: "Política de Privacidade | NexaFlow" },
+      { property: "og:title", content: "Política de Privacidade | Velqora" },
       {
         property: "og:description",
         content: "Como são tratados os dados enviados através deste website.",

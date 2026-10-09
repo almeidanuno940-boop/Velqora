@@ -4,12 +4,12 @@ import { LegalPage } from "@/components/site/LegalPage";
 export const Route = createFileRoute("/termos")({
   head: () => ({
     meta: [
-      { title: "Termos e Condições | NexaFlow" },
+      { title: "Termos e Condições | Velqora" },
       {
         name: "description",
-        content: "Termos e Condições do website NexaFlow — Automation & Data Solutions.",
+        content: "Termos e Condições do website Velqora — Automation & Data Solutions.",
       },
-      { property: "og:title", content: "Termos e Condições | NexaFlow" },
+      { property: "og:title", content: "Termos e Condições | Velqora" },
       { property: "og:description", content: "Condições de utilização deste website." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

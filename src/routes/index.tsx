@@ -17,15 +17,15 @@ import {
 } from "@/components/site/Sections";
 import { CONTACT } from "@/content/site";
 
-const TITLE = "NexaFlow | Automação, IA e Data Analytics para Empresas";
+const TITLE = "Velqora | Automação, IA e Data Analytics para Empresas";
 const DESC =
-  "A NexaFlow cria soluções de automação, inteligência artificial, Power BI e análise de dados para pequenas e médias empresas em Portugal.";
+  "A Velqora cria soluções de automação, inteligência artificial, Power BI e análise de dados para pequenas e médias empresas em Portugal.";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "NexaFlow",
-  alternateName: "NexaFlow Automation & Data Solutions",
+  name: "Velqora",
+  alternateName: "Velqora Automation & Data Solutions",
   slogan: "Automatize. Simplifique. Cresça.",
   description: DESC,
   email: CONTACT.email,
@@ -48,12 +48,12 @@ export const Route = createFileRoute("/")({
       {
         name: "keywords",
         content:
-          "NexaFlow, automação de processos, automação de leads, automação para empresas, Power BI, dashboards Power BI, inteligência artificial para empresas, análise de dados, Portugal",
+          "Velqora, automação de processos, automação de leads, automação para empresas, Power BI, dashboards Power BI, inteligência artificial para empresas, análise de dados, Portugal",
       },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "NexaFlow" },
+      { property: "og:site_name", content: "Velqora" },
       { property: "og:url", content: "https://screenshot-magic-8550.lovable.app/" },
       { property: "og:image", content: "https://screenshot-magic-8550.lovable.app/og-image.svg" },
       { property: "og:locale", content: "pt_PT" },

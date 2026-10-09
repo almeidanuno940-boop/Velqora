@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone } from "lucide-react";
 import { CONTACT, NAV } from "@/content/site";
-import { Logo } from "./Header";
+import { Logo } from "./Logo";
 
 export function Footer() {
   const links = NAV.filter((n) => n.label !== "Como funciona");
@@ -41,7 +41,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <p>© 2026 NexaFlow. Todos os direitos reservados.</p>
+          <p>© 2026 Velqora. Todos os direitos reservados.</p>
           <div className="flex gap-5">
             <Link to="/privacidade" className="hover:text-foreground">
               Política de Privacidade

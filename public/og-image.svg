@@ -1,12 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#092e3d"/><stop offset="1" stop-color="#075b63"/></linearGradient></defs>
-  <rect width="1200" height="630" fill="url(#g)"/>
-  <circle cx="1020" cy="120" r="250" fill="#62ccb9" opacity=".12"/>
-  <rect x="92" y="92" width="74" height="74" rx="20" fill="#63d3bd"/>
-  <text x="129" y="142" fill="#073341" font-family="Arial,sans-serif" font-size="30" font-weight="700" text-anchor="middle">NF</text>
-  <text x="190" y="143" fill="#fff" font-family="Arial,sans-serif" font-size="43" font-weight="700">NexaFlow</text>
-  <text x="94" y="300" fill="#fff" font-family="Arial,sans-serif" font-size="59" font-weight="700">Automatize o trabalho.</text>
-  <text x="94" y="374" fill="#8fe4d0" font-family="Arial,sans-serif" font-size="59" font-weight="700">Transforme os seus dados.</text>
-  <text x="98" y="470" fill="#d2e1e2" font-family="Arial,sans-serif" font-size="25">Automation &amp; Data Solutions</text>
-  <text x="98" y="530" fill="#8fe4d0" font-family="Arial,sans-serif" font-size="23">Automatize. Simplifique. Cresça.</text>
+  <defs>
+    <radialGradient id="glow" cx="78%" cy="30%" r="60%">
+      <stop stop-color="#0f4a56" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#06090f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="r" x1="0" y1="1" x2="1" y2="0">
+      <stop stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#7dd3fc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#06090f"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(92 86) scale(1.5)">
+    <path d="M9 9 L24 39" stroke="#fbbf6b" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="0.01 8.6" fill="none"/>
+    <path d="M24 39 L39 9" stroke="url(#r)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  </g>
+  <text x="180" y="142" fill="#eef3f8" font-family="Georgia,'Times New Roman',serif" font-size="58">Velqora</text>
+  <text x="92" y="318" fill="#eef3f8" font-family="Georgia,'Times New Roman',serif" font-size="78">Do caos dos dados</text>
+  <text x="92" y="410" fill="#5eead4" font-family="Georgia,'Times New Roman',serif" font-size="78" font-style="italic">à clareza.</text>
+  <text x="94" y="500" fill="#9fb0c3" font-family="Arial,Helvetica,sans-serif" font-size="27">Automação, IA e Power BI para empresas</text>
+  <g fill="#fbbf6b" opacity=".85">
+    <circle cx="760" cy="440" r="4"/><circle cx="820" cy="380" r="3"/><circle cx="880" cy="470" r="5"/>
+    <circle cx="930" cy="400" r="3"/><circle cx="800" cy="520" r="3"/><circle cx="960" cy="520" r="4"/>
+  </g>
+  <g stroke="#5eead4" stroke-width="3" stroke-linecap="round" opacity=".9">
+    <path d="M1000 470 L1080 470"/><path d="M1000 410 L1100 410" opacity=".7"/><path d="M1000 350 L1060 350" opacity=".5"/>
+  </g>
 </svg>

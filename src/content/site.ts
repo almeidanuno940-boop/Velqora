@@ -280,7 +280,7 @@ export const PLANS = [
 export const FAQS = [
   {
     q: "Trabalham apenas com empresas de uma região?",
-    a: "Não. A NexaFlow tem base em Portugal e pode desenvolver e acompanhar soluções remotamente para empresas em diferentes regiões.",
+    a: "Não. A Velqora tem base em Portugal e pode desenvolver e acompanhar soluções remotamente para empresas em diferentes regiões.",
   },
   {
     q: "Preciso de mudar os programas que já utilizo?",

@@ -47,7 +47,7 @@ export function Hero() {
       <div className="absolute -top-32 right-0 -z-10 size-[520px] rounded-full bg-accent blur-3xl opacity-70" />
       <div className={cn(wrap, "grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]")}>
         <Reveal>
-          <p className="eyebrow">NexaFlow · Automation &amp; Data Solutions</p>
+          <p className="eyebrow">Velqora · Automation &amp; Data Solutions</p>
           <p className="mt-3 text-sm font-medium text-muted-foreground">
             Automatize. Simplifique. Cresça.
           </p>
@@ -57,7 +57,7 @@ export function Hero() {
             <span className="text-primary">Transforme os seus dados.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            A NexaFlow cria soluções de automação, inteligência artificial e análise de dados que
+            A Velqora cria soluções de automação, inteligência artificial e análise de dados que
             ajudam empresas a simplificar processos, poupar tempo e trabalhar de forma mais
             eficiente.
           </p>
@@ -332,7 +332,7 @@ export function Demo() {
         </ol>
         <Reveal className="mt-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <p className="max-w-2xl text-sm text-ink-foreground/65">
-            Exemplo demonstrativo desenvolvido pela NexaFlow. Os dados e o fluxo ilustram uma
+            Exemplo demonstrativo desenvolvido pela Velqora. Os dados e o fluxo ilustram uma
             possibilidade e não representam um cliente real.
           </p>
           <CtaLink href="#contacto" variant="light">
@@ -479,13 +479,13 @@ export function About() {
     <section id="sobre" className="border-y border-border bg-card py-20 sm:py-28">
       <div className={cn(wrap, "grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center")}>
         <Reveal>
-          <p className="eyebrow">Sobre a NexaFlow</p>
+          <p className="eyebrow">Sobre a Velqora</p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
             Tecnologia útil para o dia a dia das empresas.
           </h2>
           <div className="mt-6 space-y-4 text-lg text-muted-foreground">
             <p>
-              A NexaFlow nasceu com um objetivo simples: tornar a tecnologia útil para pequenas e
+              A Velqora nasceu com um objetivo simples: tornar a tecnologia útil para pequenas e
               médias empresas.
             </p>
             <p>

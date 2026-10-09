@@ -1,7 +1,6 @@
-# NexaFlow
+# Velqora
 
-Website da NexaFlow — Automation & Data Solutions.
-Vercel deployment identity refresh.
+Website da Velqora — automação, inteligência artificial e Power BI para empresas.
 
 **Website:** https://screenshot-magic-8550.lovable.app<br>
 **Projeto Lovable:** https://lovable.dev/projects/4e715852-9a17-41ba-a01f-9a8d2e856ed8
@@ -12,7 +11,7 @@ Vercel deployment identity refresh.
 - TanStack Start e TanStack Router
 - Vite 8
 - Tailwind CSS 4
-- Nitro, com preset de build Cloudflare Module
+- Netlify (adaptador TanStack Start) e Nitro
 
 ## Desenvolvimento
 
@@ -29,7 +28,7 @@ bun run dev
 bun run build
 ```
 
-O build de produção é gerado em `.output/` pelo Nitro. O preset Cloudflare Module está configurado pelo preset Vite da Lovable. As alterações enviadas para o branch ligado à Lovable sincronizam com o editor; não reescrever o histórico publicado.
+As alterações enviadas para o branch ligado à Lovable sincronizam com o editor; não reescrever o histórico publicado.
 
 ## Formulário de contacto
 

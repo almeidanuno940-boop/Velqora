@@ -1,5 +1,6 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "velqora",
+  "description": "Velqora — automação, inteligência artificial e Power BI para empresas.",
   "private": true,
   "sideEffects": false,
   "type": "module",

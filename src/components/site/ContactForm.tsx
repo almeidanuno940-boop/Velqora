@@ -32,7 +32,7 @@ export function ContactForm() {
         data.mensagem,
       ].join("\n");
       setFallbackHref(
-        `${CONTACT.emailHref}?subject=${encodeURIComponent("Pedido de demonstração NexaFlow")}&body=${encodeURIComponent(body)}`,
+        `${CONTACT.emailHref}?subject=${encodeURIComponent("Pedido de demonstração Velqora")}&body=${encodeURIComponent(body)}`,
       );
       setStatus("unconfigured");
       return;

@@ -2,34 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { NAV } from "@/content/site";
 import { cn } from "@/lib/utils";
-
-export function Logo({ light }: { light?: boolean }) {
-  return (
-    <a href="/#inicio" className="flex items-center gap-2.5" aria-label="NexaFlow — início">
-      <span className="grid size-9 place-items-center rounded-xl bg-primary font-mono text-sm font-semibold tracking-tight text-primary-foreground">
-        NF
-      </span>
-      <span className="leading-tight">
-        <span
-          className={cn(
-            "block text-[16px] font-semibold tracking-tight",
-            light ? "text-ink-foreground" : "text-foreground",
-          )}
-        >
-          NexaFlow
-        </span>
-        <span
-          className={cn(
-            "block text-[9px] uppercase tracking-[0.12em]",
-            light ? "text-ink-foreground/60" : "text-muted-foreground",
-          )}
-        >
-          Automation &amp; Data Solutions
-        </span>
-      </span>
-    </a>
-  );
-}
+import { Logo } from "./Logo";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
