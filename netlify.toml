@@ -1,3 +1,8 @@
 [build]
   command = "vite build"
   publish = "dist/client"
+
+# Functions v2: /api/lead está declarado em netlify/functions/lead.ts (config.path).
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

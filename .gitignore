@@ -32,3 +32,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Variáveis de ambiente (nunca no repositório; usar .env.example como modelo)
+.env
+.env.*
+!.env.example
+
+# Netlify local / temporários
+.netlify
+.lovable-cache
+*.tmp
+.output
