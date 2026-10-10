@@ -262,7 +262,7 @@ export function ContactForm() {
           <input
             id="consentimento"
             type="checkbox"
-            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-[oklch(0.87_0.13_178)]"
+            className="size-6 shrink-0 cursor-pointer accent-[oklch(0.87_0.13_178)]"
             {...aria("consentimento")}
             {...register("consentimento")}
           />

@@ -805,7 +805,7 @@ export function Faq() {
               Não encontra a resposta?{" "}
               <a
                 href="#contacto"
-                className="text-primary underline underline-offset-4 hover:no-underline"
+                className="py-3 text-primary underline underline-offset-4 hover:no-underline"
               >
                 Fale connosco
               </a>
