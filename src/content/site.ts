@@ -1,6 +1,7 @@
 /**
  * Endereço público do site (sem barra final). Usado no canonical, og:url e imagens de partilha.
- * Quando houver domínio definitivo, trocar aqui e também em public/robots.txt e public/sitemap.xml.
+ * Quando houver domínio definitivo, trocar SÓ aqui: robots.txt e sitemap.xml são gerados a partir
+ * desta constante por scripts/sync-site-url.mjs (corre antes de cada build).
  */
 export const SITE_URL = "https://screenshot-magic-8550.lovable.app";
 
