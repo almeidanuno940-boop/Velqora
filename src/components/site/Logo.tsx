@@ -40,10 +40,11 @@ export function LogoMark({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, onClick }: { className?: string; onClick?: () => void }) {
   return (
     <a
       href="/#inicio"
+      onClick={onClick}
       className={cn(
         "group inline-flex items-center gap-2.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
         className,

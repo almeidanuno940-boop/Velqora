@@ -59,7 +59,7 @@ export function Header() {
           scrolled && !open && "sm:h-16",
         )}
       >
-        <Logo className="relative z-10" />
+        <Logo className="relative z-10" onClick={() => setOpen(false)} />
 
         <nav
           aria-label="Principal"
@@ -93,6 +93,7 @@ export function Header() {
         <div className="relative z-10 flex items-center gap-2">
           <a
             href="/#contacto"
+            onClick={() => setOpen(false)}
             className="hidden min-h-11 items-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-all duration-500 ease-out-expo hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_oklch(0.87_0.13_178/0.6)] sm:inline-flex"
           >
             Pedir demonstração
