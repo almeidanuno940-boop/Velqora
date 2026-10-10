@@ -220,4 +220,9 @@ export default async function handler(req: Request, context?: { ip?: string }): 
   }
 }
 
-export const config = { path: "/api/lead" };
+export const config = {
+  path: "/api/lead",
+  // Reforço ao limite em memória acima (que só vale por instância "quente"): o Netlify aplica
+  // este limite à entrada, partilhado por todas as instâncias. Responde 429 sem corpo JSON.
+  rateLimit: { windowSize: 60, windowLimit: 10, aggregateBy: ["ip", "domain"] },
+};

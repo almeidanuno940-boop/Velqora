@@ -767,7 +767,7 @@ export function About() {
           </Reveal>
           <Reveal delay={250} className="mt-10">
             <CtaLink href="#contacto" arrow>
-              Falar comigo
+              Falar connosco
             </CtaLink>
           </Reveal>
         </div>
