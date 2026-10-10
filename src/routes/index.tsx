@@ -18,7 +18,7 @@ import {
 import { Loader } from "@/components/site/Loader";
 import { SceneRoot } from "@/components/scene/SceneRoot";
 import { useSpotlight } from "@/hooks/use-spotlight";
-import { CONTACT } from "@/content/site";
+import { CONTACT, SITE_URL } from "@/content/site";
 
 const TITLE = "Velqora | Automação, IA e Data Analytics para Empresas";
 const DESC =
@@ -57,14 +57,19 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Velqora" },
-      { property: "og:url", content: "https://screenshot-magic-8550.lovable.app/" },
-      { property: "og:image", content: "https://screenshot-magic-8550.lovable.app/og-image.svg" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}/og-image.png` },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Velqora — do caos dos dados à clareza." },
       { property: "og:locale", content: "pt_PT" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESC },
-      { name: "twitter:image", content: "https://screenshot-magic-8550.lovable.app/og-image.svg" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],
   }),
   component: Index,

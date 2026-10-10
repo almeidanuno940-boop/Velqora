@@ -1,3 +1,9 @@
+/**
+ * Endereço público do site (sem barra final). Usado no canonical, og:url e imagens de partilha.
+ * Quando houver domínio definitivo, trocar aqui e também em public/robots.txt e public/sitemap.xml.
+ */
+export const SITE_URL = "https://screenshot-magic-8550.lovable.app";
+
 export const CONTACT = {
   email: "nunoalmeida3000@gmail.com",
   phone: "+351 916 626 440",

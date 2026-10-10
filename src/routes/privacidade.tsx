@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/site/LegalPage";
-import { CONTACT } from "@/content/site";
+import { CONTACT, SITE_URL } from "@/content/site";
 
 const link = "text-primary underline underline-offset-4";
 
@@ -38,8 +38,10 @@ export const Route = createFileRoute("/privacidade")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: `${SITE_URL}/privacidade` },
       { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/privacidade` }],
   }),
   component: () => (
     <LegalPage title="Política de Privacidade">
