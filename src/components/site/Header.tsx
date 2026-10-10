@@ -140,11 +140,11 @@ export function Header() {
         >
           Pedir demonstração
         </a>
-        <div className="mt-8 space-y-2 text-sm text-muted-foreground">
-          <a className="block hover:text-foreground" href={CONTACT.emailHref}>
+        <div className="mt-6 text-sm text-muted-foreground">
+          <a className="flex min-h-11 items-center hover:text-foreground" href={CONTACT.emailHref}>
             {CONTACT.email}
           </a>
-          <a className="block hover:text-foreground" href={CONTACT.phoneHref}>
+          <a className="flex min-h-11 items-center hover:text-foreground" href={CONTACT.phoneHref}>
             {CONTACT.phone}
           </a>
         </div>

@@ -24,7 +24,7 @@ function NotFoundComponent() {
       <title>Página não encontrada | Velqora</title>
       <meta name="robots" content="noindex" />
       <div className="backdrop" aria-hidden="true" />
-      <div className="max-w-md text-center">
+      <main id="conteudo" className="max-w-md text-center">
         <p className="eyebrow">Erro 404</p>
         <h1 className="headline mt-5 text-[7rem] text-gradient">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
@@ -39,7 +39,7 @@ function NotFoundComponent() {
             Ir para o início
           </Link>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

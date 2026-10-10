@@ -85,18 +85,18 @@ export function Hero() {
           <Reveal
             intro
             delay={600}
-            className="mt-9 flex flex-col gap-2.5 text-sm text-muted-foreground sm:flex-row sm:gap-7"
+            className="mt-9 flex flex-col text-sm text-muted-foreground sm:flex-row sm:gap-7"
           >
             <a
               href={CONTACT.emailHref}
-              className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              className="inline-flex min-h-11 items-center gap-2 transition-colors hover:text-primary"
             >
               <Mail className="size-4" />
               {CONTACT.email}
             </a>
             <a
               href={CONTACT.phoneHref}
-              className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              className="inline-flex min-h-11 items-center gap-2 transition-colors hover:text-primary"
             >
               <Phone className="size-4" />
               {CONTACT.phone}
@@ -256,7 +256,7 @@ function ServiceCard({
         <div className="mt-auto pt-8">
           <a
             href="#contacto"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-primary"
           >
             {s.cta}
             <ArrowRight className="size-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
@@ -785,7 +785,10 @@ export function Faq() {
           <Reveal delay={200}>
             <p className="mt-6 max-w-sm text-muted-foreground">
               Não encontra a resposta?{" "}
-              <a href="#contacto" className="text-primary underline-offset-4 hover:underline">
+              <a
+                href="#contacto"
+                className="text-primary underline underline-offset-4 hover:no-underline"
+              >
                 Fale connosco
               </a>
               .
@@ -829,7 +832,7 @@ export function Contact() {
           />
           <Reveal delay={150}>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Conte-me como a sua empresa trabalha atualmente. Podemos identificar onde a automação
+              Conte-nos como a sua empresa trabalha atualmente. Podemos identificar onde a automação
               pode poupar tempo e simplificar o processo.
             </p>
           </Reveal>
@@ -900,7 +903,7 @@ export function FinalCta() {
           </CtaLink>
           <a
             href={CONTACT.phoneHref}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             ou ligue {CONTACT.phone}
           </a>
