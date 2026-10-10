@@ -453,34 +453,52 @@ export function Demo() {
     }
     let cleanup = () => {};
     let cancelled = false;
-    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([{ gsap }, { ScrollTrigger }]) => {
-        if (cancelled) return;
-        gsap.registerPlugin(ScrollTrigger);
-        const ctx = gsap.context(() => {
-          gsap.fromTo(
-            line,
-            { scaleY: 0 },
-            {
-              scaleY: 1,
-              ease: "none",
-              scrollTrigger: { trigger: list, start: "top 62%", end: "bottom 62%", scrub: 0.6 },
-            },
-          );
-          items.forEach((el) =>
-            ScrollTrigger.create({
-              trigger: el,
-              start: "top 62%",
-              onEnter: () => el.classList.add("is-active"),
-              onLeaveBack: () => el.classList.remove("is-active"),
-            }),
-          );
-        });
-        cleanup = () => ctx.revert();
-      },
-    );
+    // O GSAP só é carregado quando a secção está perto do ecrã: fica fora do arranque da página.
+    const load = () =>
+      void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+        ([{ gsap }, { ScrollTrigger }]) => {
+          if (cancelled) return;
+          gsap.registerPlugin(ScrollTrigger);
+          const ctx = gsap.context(() => {
+            gsap.fromTo(
+              line,
+              { scaleY: 0 },
+              {
+                scaleY: 1,
+                ease: "none",
+                scrollTrigger: { trigger: list, start: "top 62%", end: "bottom 62%", scrub: 0.6 },
+              },
+            );
+            items.forEach((el) =>
+              ScrollTrigger.create({
+                trigger: el,
+                start: "top 62%",
+                onEnter: () => el.classList.add("is-active"),
+                onLeaveBack: () => el.classList.remove("is-active"),
+              }),
+            );
+          });
+          cleanup = () => ctx.revert();
+        },
+      );
+    let observer: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            observer?.disconnect();
+            load();
+          }
+        },
+        { rootMargin: "900px 0px" },
+      );
+      observer.observe(list);
+    } else {
+      load();
+    }
     return () => {
       cancelled = true;
+      observer?.disconnect();
       cleanup();
     };
   }, []);

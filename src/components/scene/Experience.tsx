@@ -14,6 +14,24 @@ import { Motes, Sky } from "./Atmosphere";
 
 type Props = { tier: Tier; reduced: boolean };
 
+/*
+ * O R3F 9.8 (última versão estável) ainda cria um THREE.Clock, que o three 0.186 marca como
+ * deprecado. O aviso é inofensivo e só desaparece com o R3F 10, por isso filtramos só essa
+ * mensagem e deixamos passar todas as outras.
+ */
+if (
+  typeof console !== "undefined" &&
+  !(console.warn as { __velqoraFiltered?: true }).__velqoraFiltered
+) {
+  const warn = console.warn.bind(console);
+  const filtered = (...args: unknown[]) => {
+    if (typeof args[0] === "string" && args[0].startsWith("THREE.Clock:")) return;
+    warn(...args);
+  };
+  (filtered as { __velqoraFiltered?: true }).__velqoraFiltered = true;
+  console.warn = filtered;
+}
+
 const tmpPos = new THREE.Vector3();
 const tmpLook = new THREE.Vector3();
 const right = new THREE.Vector3();
