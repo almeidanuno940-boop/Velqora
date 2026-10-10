@@ -1,27 +1,8 @@
-import type { ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { LegalPage } from "@/components/site/LegalPage";
+import { LegalPage, Pending, Section } from "@/components/site/LegalPage";
 import { CONTACT, SITE_URL } from "@/content/site";
 
 const link = "text-primary underline underline-offset-4";
-
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-xl font-medium text-foreground">{title}</h2>
-      {children}
-    </section>
-  );
-}
-
-/** Informação que só o responsável pelo site pode fornecer. Fica visível até ser preenchida. */
-function Pending({ children }: { children: ReactNode }) {
-  return (
-    <span className="rounded bg-ember/15 px-1.5 py-0.5 text-base text-foreground/90">
-      [{children}]
-    </span>
-  );
-}
 
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
@@ -114,8 +95,9 @@ export const Route = createFileRoute("/privacidade")({
         <p>
           Este website não usa cookies, nem ferramentas de análise ou de publicidade. Para limitar
           envios repetidos do formulário, guarda temporariamente no seu browser (armazenamento de
-          sessão) o número de pedidos enviados, que desaparece ao fechar o separador. Os tipos de
-          letra são servidos pelo próprio website, sem pedidos a serviços externos.
+          sessão) o número de pedidos enviados e, para repor a posição de leitura ao navegar, a
+          posição da página. Ambos desaparecem ao fechar o separador. Os tipos de letra são servidos
+          pelo próprio website, sem pedidos a serviços externos.
         </p>
       </Section>
 
@@ -123,7 +105,7 @@ export const Route = createFileRoute("/privacidade")({
         <p>
           Para travar o envio automático de spam, o nosso servidor conta temporariamente, em
           memória, os pedidos recebidos por endereço IP, sem guardar esse endereço nem o associar ao
-          seu pedido.
+          seu pedido. A plataforma de alojamento aplica também um limite de pedidos por endereço IP.
         </p>
       </Section>
     </LegalPage>

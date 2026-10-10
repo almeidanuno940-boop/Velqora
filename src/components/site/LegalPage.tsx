@@ -2,6 +2,24 @@ import type { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
+export function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="space-y-3">
+      <h2 className="text-xl font-medium text-foreground">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+/** Informação que só o responsável pelo site pode fornecer. Fica visível até ser preenchida. */
+export function Pending({ children }: { children: ReactNode }) {
+  return (
+    <span className="rounded bg-ember/15 px-1.5 py-0.5 text-base text-foreground/90">
+      [{children}]
+    </span>
+  );
+}
+
 export function LegalPage({ title, children }: { title: string; children: ReactNode }) {
   return (
     <>
