@@ -4,6 +4,9 @@ import { SceneFallback } from "./SceneFallback";
 
 const Experience = lazy(() => import("./Experience"));
 
+/** Instante mínimo (ms desde o início da navegação) para arrancar a cena: a intro do hero acaba por volta dos 2,5 s. */
+const SCENE_MIN_START_MS = 2600;
+
 type Mode =
   { kind: "pending" } | { kind: "static" } | { kind: "webgl"; tier: Tier; reduced: boolean };
 
@@ -39,7 +42,8 @@ export function SceneRoot() {
       setMode({ kind: "static" });
       return stop;
     }
-    // a cena só arranca depois do "load" e com o browser livre: não compete com o conteúdo
+    // a cena só arranca depois do "load", depois de a animação de entrada do hero terminar e com o
+    // browser livre: assim não compete com a hidratação nem com o primeiro título pintado
     let idle = 0;
     let timer = 0;
     const start = () => setMode({ kind: "webgl", tier: detectTier(), reduced });
@@ -49,11 +53,14 @@ export function SceneRoot() {
       if (ric) idle = ric(start, { timeout: 1500 });
       else timer = window.setTimeout(start, 200);
     };
-    if (document.readyState === "complete") whenIdle();
-    else window.addEventListener("load", whenIdle, { once: true });
+    const afterIntro = () => {
+      timer = window.setTimeout(whenIdle, Math.max(0, SCENE_MIN_START_MS - performance.now()));
+    };
+    if (document.readyState === "complete") afterIntro();
+    else window.addEventListener("load", afterIntro, { once: true });
     return () => {
       stop();
-      window.removeEventListener("load", whenIdle);
+      window.removeEventListener("load", afterIntro);
       if (idle) window.cancelIdleCallback(idle);
       window.clearTimeout(timer);
     };
