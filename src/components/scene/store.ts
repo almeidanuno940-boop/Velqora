@@ -99,6 +99,42 @@ export function detectWebGL(): { ok: boolean; software: boolean; renderer: strin
   }
 }
 
+export type SceneEnv = {
+  width: number;
+  saveData?: boolean | undefined;
+  effectiveType?: string | undefined;
+  deviceMemory?: number | undefined;
+  reducedMotion: boolean;
+};
+
+/**
+ * Motivo para nem sequer descarregar o three.js (~1 MB) e mostrar o fundo estático, ou null se a
+ * cena 3D pode carregar. `deviceMemory` e `connection` só existem em browsers Chromium; quando
+ * faltam, não contam.
+ */
+export function sceneSkipReason(env: SceneEnv): string | null {
+  if (env.width < 768) return "ecrã pequeno";
+  if (env.saveData) return "poupança de dados";
+  if (/^(slow-2g|2g)$/.test(env.effectiveType ?? "")) return "ligação lenta";
+  if (env.deviceMemory !== undefined && env.deviceMemory <= 4) return "pouca memória";
+  if (env.reducedMotion) return "movimento reduzido";
+  return null;
+}
+
+export function readSceneEnv(): SceneEnv {
+  const nav = navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: { saveData?: boolean; effectiveType?: string };
+  };
+  return {
+    width: window.innerWidth,
+    saveData: nav.connection?.saveData,
+    effectiveType: nav.connection?.effectiveType,
+    deviceMemory: nav.deviceMemory,
+    reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  };
+}
+
 export function detectTier(): Tier {
   const nav = navigator as Navigator & { deviceMemory?: number };
   const coarse = window.matchMedia("(pointer: coarse)").matches;

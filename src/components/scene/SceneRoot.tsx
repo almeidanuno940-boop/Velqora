@@ -7,7 +7,14 @@ import {
   type ComponentType,
   type ReactNode,
 } from "react";
-import { detectTier, detectWebGL, startSceneTracking, type Tier } from "./store";
+import {
+  detectTier,
+  detectWebGL,
+  readSceneEnv,
+  sceneSkipReason,
+  startSceneTracking,
+  type Tier,
+} from "./store";
 import { SceneFallback } from "./SceneFallback";
 
 // A cena só corre no browser. No build SSR o ramo do import é eliminado (import.meta.env.SSR é
@@ -40,7 +47,8 @@ class SceneBoundary extends Component<{ children: ReactNode; onError: () => void
 
 /**
  * Decide como mostrar o fundo: cena WebGL (carregada de forma lazy depois da hidratação)
- * ou um fundo estático quando não há WebGL / o GPU é emulado / a cena falha.
+ * ou um fundo estático quando não compensa (ver sceneSkipReason), não há WebGL, o GPU é emulado
+ * ou a cena falha.
  * O conteúdo da página nunca depende da cena.
  */
 export function SceneRoot() {
@@ -49,15 +57,17 @@ export function SceneRoot() {
   useEffect(() => {
     const stop = startSceneTracking();
     const params = new URLSearchParams(window.location.search);
-    const gl = detectWebGL();
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const env = readSceneEnv();
+    const reduced = env.reducedMotion;
     const force = params.get("scene") === "force";
-    // Poupança de dados ou ligação 2G: não descarregar ~1 MB de three.js só para o fundo.
-    const conn = (
-      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
-    ).connection;
-    const lean = !!conn?.saveData || /^(slow-2g|2g)$/.test(conn?.effectiveType ?? "");
-    if (params.get("scene") === "off" || !gl.ok || (gl.software && !force) || (lean && !force)) {
+    // Telemóvel, poupança de dados, pouca memória ou movimento reduzido: fundo estático, sem
+    // descarregar o three.js (?scene=force ignora estas regras, para testes).
+    if (params.get("scene") === "off" || (sceneSkipReason(env) && !force)) {
+      setMode({ kind: "static" });
+      return stop;
+    }
+    const gl = detectWebGL();
+    if (!gl.ok || (gl.software && !force)) {
       setMode({ kind: "static" });
       return stop;
     }
