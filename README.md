@@ -15,11 +15,13 @@ Website da Velqora — automação, inteligência artificial e Power BI para emp
 
 ## Desenvolvimento
 
-O projeto inclui `bun.lock` e utiliza Bun para gerir dependências:
+O gestor de pacotes é o **Bun** (`bun.lock` é a única lockfile; não usar `npm install`, que cria um `package-lock.json`).
 
 ```sh
 bun install
-bun run dev
+bun run dev        # servidor de desenvolvimento
+bun run typecheck  # tsc --noEmit
+bun run lint
 ```
 
 ## Build e deployment

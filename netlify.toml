@@ -1,6 +1,10 @@
 [build]
+  # O Netlify instala as dependências com Bun por detetar o bun.lock; o comando abaixo não depende do gestor.
   command = "node scripts/sync-site-url.mjs && vite build"
   publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 # Functions v2: /api/lead está declarado em netlify/functions/lead.ts (config.path).
 [functions]
