@@ -39,3 +39,23 @@ O formulário valida os campos no browser e envia o pedido para a Netlify Functi
 O URL do webhook fica **só no servidor**, na variável de ambiente `MAKE_WEBHOOK_URL` (Netlify: _Site configuration > Environment variables_; depois é preciso fazer novo deploy). Nunca usar o prefixo `VITE_`, que embute o valor no JavaScript do browser. Em local, copie `.env.example` para `.env`. Sem a variável, a function responde 503 e o formulário mostra uma alternativa por email.
 
 `LEAD_RATE_LIMIT_MAX` (opcional) altera o limite por IP (por defeito, 5 pedidos em 10 minutos).
+
+## Testes
+
+```sh
+bun run test       # vitest: Netlify Function do formulário e formato dos contactos
+```
+
+Teste de ponta a ponta do formulário (browser real, function e webhook simulado; precisa do Google Chrome):
+
+```sh
+MAKE_WEBHOOK_URL=http://127.0.0.1:4599/hook LEAD_RATE_LIMIT_MAX=100 bun run dev   # num terminal
+BASE_URL=http://127.0.0.1:5173 bun run test:e2e                                    # noutro
+```
+
+## Domínio, dados legais e contactos
+
+- **Domínio:** defina `VITE_SITE_URL` no Netlify (ou altere `DEFAULT_SITE_URL` em `src/content/site.ts`) e faça novo deploy. Canonical, Open Graph, `robots.txt` e `sitemap.xml` seguem esse valor.
+- **Dados legais:** preencha `src/content/legal.ts` (denominação, NIF, morada, prazo de conservação). Enquanto faltar algum, as páginas legais mostram "Texto a rever" e o build avisa; com `STRICT_LEGAL=1` o build falha.
+- **Contactos públicos:** `CONTACT` em `src/content/site.ts`.
+- **Monitorização:** ver [docs/LANCAMENTO.md](docs/LANCAMENTO.md).
