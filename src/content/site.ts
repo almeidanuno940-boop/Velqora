@@ -16,11 +16,19 @@ const envSiteUrl = (import.meta as { env?: Record<string, string | undefined> })
   .replace(/\/+$/, "");
 export const SITE_URL = envSiteUrl || DEFAULT_SITE_URL;
 
+/**
+ * Contactos públicos (aparecem no site, nos links mailto:/tel:, no formulário e nos dados estruturados).
+ * Altere só aqui. Os links são derivados dos valores base; tests/contact.test.ts valida o formato.
+ */
+const EMAIL = "nunoalmeida3000@gmail.com";
+const PHONE_E164 = "+351916626440"; // formato internacional, sem espaços (usado em tel: e no JSON-LD)
+
 export const CONTACT = {
-  email: "nunoalmeida3000@gmail.com",
-  phone: "+351 916 626 440",
-  phoneHref: "tel:+351916626440",
-  emailHref: "mailto:nunoalmeida3000@gmail.com",
+  email: EMAIL,
+  emailHref: `mailto:${EMAIL}`,
+  phone: "+351 916 626 440", // como é mostrado ao visitante
+  phoneE164: PHONE_E164,
+  phoneHref: `tel:${PHONE_E164}`,
 };
 
 export const NAV = [

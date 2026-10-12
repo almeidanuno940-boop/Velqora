@@ -32,7 +32,7 @@ const jsonLd = {
   slogan: "Automatize. Simplifique. Cresça.",
   description: DESC,
   email: CONTACT.email,
-  telephone: "+351916626440",
+  telephone: CONTACT.phoneE164,
   areaServed: "PT",
   knowsAbout: [
     "Automação de processos",
