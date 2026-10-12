@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { LegalPage, Pending, Section } from "@/components/site/LegalPage";
+import { LegalPage, LegalValue, Section } from "@/components/site/LegalPage";
 import { CONTACT, SITE_URL } from "@/content/site";
 
 export const Route = createFileRoute("/termos")({
@@ -30,7 +30,9 @@ export const Route = createFileRoute("/termos")({
           .
         </p>
         <p>
-          <Pending>denominação legal, NIF e morada a indicar</Pending>
+          Denominação legal: <LegalValue field="legalName" label="denominação legal" />. NIF:{" "}
+          <LegalValue field="nif" label="NIF" />. Morada:{" "}
+          <LegalValue field="address" label="morada" />.
         </p>
       </Section>
 

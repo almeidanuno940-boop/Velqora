@@ -1,6 +1,6 @@
 [build]
   # O Netlify instala as dependências com Bun por detetar o bun.lock; o comando abaixo não depende do gestor.
-  command = "node scripts/sync-site-url.mjs && vite build"
+  command = "node scripts/sync-site-url.mjs && node scripts/check-legal.mjs && vite build"
   publish = "dist/client"
 
 [build.environment]
