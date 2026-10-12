@@ -45,5 +45,4 @@ dist-ssr
 .output
 
 # Vídeo TikTok (Remotion)
-tiktok-ad/node_modules
-tiktok-ad/out
+tiktok-ad/
