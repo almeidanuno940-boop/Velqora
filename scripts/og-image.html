@@ -1,0 +1,198 @@
+<!doctype html>
+<!--
+  Template da imagem de partilha (public/og-image.png, 1200×630).
+  Gerar com: bun run og-image   (scripts/render-og-image.mjs)
+  As fontes vêm de node_modules (as mesmas do site); as cores são os tokens de src/styles.css.
+-->
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: "Bricolage";
+        src: url("../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2")
+          format("woff2");
+        font-weight: 200 800;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("../node_modules/@fontsource/geist/files/geist-latin-400-normal.woff2")
+          format("woff2");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "Geist";
+        src: url("../node_modules/@fontsource/geist/files/geist-latin-500-normal.woff2")
+          format("woff2");
+        font-weight: 500;
+      }
+      :root {
+        --bg: #06090f;
+        --fg: oklch(0.96 0.008 240);
+        --muted: oklch(0.76 0.025 245);
+        --primary: #5eead4;
+        --sky: #7dd3fc;
+        --ember: #fbbf6b;
+      }
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        padding: 64px 72px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: var(--fg);
+        font-family: "Geist", sans-serif;
+        background:
+          radial-gradient(520px 420px at 880px 330px, rgb(94 234 212 / 0.16), transparent 70%),
+          radial-gradient(700px 500px at 1150px 0px, rgb(125 211 252 / 0.08), transparent 70%),
+          var(--bg);
+      }
+      .art {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .brand {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-family: "Bricolage", sans-serif;
+        font-size: 44px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+      }
+      h1 {
+        position: relative;
+        font-family: "Bricolage", sans-serif;
+        font-weight: 500;
+        font-size: 88px;
+        line-height: 0.98;
+        letter-spacing: -0.035em;
+        max-width: 760px;
+      }
+      h1 .tone {
+        display: block;
+        color: var(--muted);
+        opacity: 0.75;
+      }
+      .foot {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .sub {
+        font-size: 30px;
+        font-weight: 500;
+        color: var(--fg);
+      }
+      .pill {
+        font-size: 24px;
+        font-weight: 500;
+        color: #04221d;
+        background: var(--primary);
+        border-radius: 999px;
+        padding: 14px 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <!-- A mesma metáfora do fundo do site: pontos âmbar que convergem num cristal e saem em feixes. -->
+      <svg class="art" viewBox="0 0 1200 630" aria-hidden="true">
+        <defs>
+          <linearGradient id="lane" x1="0" x2="1">
+            <stop offset="0" stop-color="#5eead4" stop-opacity="0.85" />
+            <stop offset="1" stop-color="#7dd3fc" stop-opacity="0" />
+          </linearGradient>
+          <radialGradient id="core" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#5eead4" stop-opacity="0.45" />
+            <stop offset="1" stop-color="#5eead4" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <g id="dots" fill="#fbbf6b"></g>
+        <circle cx="900" cy="300" r="150" fill="url(#core)" />
+        <circle cx="900" cy="300" r="205" fill="none" stroke="#5eead4" stroke-opacity="0.18" />
+        <g fill="none" stroke="#c8fff6" stroke-width="2">
+          <path stroke-opacity="0.7" d="M900 228 L962 264 L962 336 L900 372 L838 336 L838 264 Z" />
+          <path stroke-opacity="0.28" d="M900 228 L900 372 M838 264 L962 336 M962 264 L838 336" />
+        </g>
+        <g id="lanes" fill="none" stroke="url(#lane)" stroke-width="2"></g>
+      </svg>
+
+      <div class="brand">
+        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="r" x1="32" y1="52" x2="53" y2="12" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#5eead4" />
+              <stop offset="1" stop-color="#7dd3fc" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M12 12 L32 52"
+            stroke="#fbbf6b"
+            stroke-width="6.5"
+            stroke-linecap="round"
+            stroke-dasharray="0.01 11.4"
+            fill="none"
+          />
+          <path
+            d="M32 52 L52 12"
+            stroke="url(#r)"
+            stroke-width="6.5"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+        Velqora
+      </div>
+
+      <h1><span class="tone">Automatize o trabalho.</span>Transforme os seus dados.</h1>
+
+      <div class="foot">
+        <p class="sub">Automação, IA e Power BI para empresas</p>
+        <p class="pill">Pedir demonstração</p>
+      </div>
+    </div>
+
+    <script>
+      // Pontos e feixes gerados com uma semente fixa: a imagem sai sempre igual.
+      let s = 11;
+      const r = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+      const ns = "http://www.w3.org/2000/svg";
+      const dots = document.getElementById("dots");
+      for (let i = 0; i < 70; i++) {
+        const t = r();
+        const c = document.createElementNS(ns, "circle");
+        c.setAttribute("cx", 560 + t * 300);
+        c.setAttribute("cy", 300 + (r() - 0.5) * (1 - t) * 420);
+        c.setAttribute("r", 1.5 + r() * 2.5);
+        c.setAttribute("opacity", 0.2 + r() * 0.55);
+        dots.appendChild(c);
+      }
+      const lanes = document.getElementById("lanes");
+      for (const dy of [-75, -45, -15, 15, 45, 75]) {
+        const p = document.createElementNS(ns, "path");
+        p.setAttribute(
+          "d",
+          `M975 ${300 + dy * 0.4} C 1060 ${300 + dy * 0.6}, 1130 ${300 + dy * 1.4}, 1200 ${300 + dy * 2.2}`,
+        );
+        lanes.appendChild(p);
+      }
+    </script>
+  </body>
+</html>

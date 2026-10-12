@@ -62,7 +62,10 @@ export const Route = createFileRoute("/")({
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Velqora — do caos dos dados à clareza." },
+      {
+        property: "og:image:alt",
+        content: "Velqora — Automatize o trabalho. Transforme os seus dados.",
+      },
       { property: "og:locale", content: "pt_PT" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
