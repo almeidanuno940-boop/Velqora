@@ -10,3 +10,14 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Cabeçalhos de segurança dos ficheiros estáticos. As páginas renderizadas no servidor recebem os
+# mesmos valores em src/lib/security-headers.ts (mantenha os dois iguais).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
