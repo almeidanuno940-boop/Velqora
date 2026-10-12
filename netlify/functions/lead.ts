@@ -29,9 +29,9 @@ function json(status: number, body: Record<string, unknown>, headers: Record<str
   });
 }
 
-/** Regista um erro sem dados pessoais: só o evento, o tipo e o estado HTTP. */
+/** Regista um erro sem dados pessoais: só o evento, o tipo, o estado HTTP e o momento. */
 function logError(event: string, extra: Record<string, unknown> = {}) {
-  console.error(JSON.stringify({ event, ...extra }));
+  console.error(JSON.stringify({ event, ...extra, at: new Date().toISOString() }));
 }
 
 function clientIp(req: Request, context: { ip?: string } | undefined): string {
