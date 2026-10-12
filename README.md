@@ -57,5 +57,6 @@ BASE_URL=http://127.0.0.1:5173 bun run test:e2e                                 
 
 - **Domínio:** defina `VITE_SITE_URL` no Netlify (ou altere `DEFAULT_SITE_URL` em `src/content/site.ts`) e faça novo deploy. Canonical, Open Graph, `robots.txt` e `sitemap.xml` seguem esse valor.
 - **Dados legais:** preencha `src/content/legal.ts` (denominação, NIF, morada, prazo de conservação). Enquanto faltar algum, as páginas legais mostram "Texto a rever" e o build avisa; com `STRICT_LEGAL=1` o build falha.
+- **Imagem de partilha:** `public/og-image.png` é gerada a partir de `scripts/og-image.html` com `bun run og-image` (precisa do Google Chrome).
 - **Contactos públicos:** `CONTACT` em `src/content/site.ts`.
 - **Monitorização:** ver [docs/LANCAMENTO.md](docs/LANCAMENTO.md).
