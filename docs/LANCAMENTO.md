@@ -41,3 +41,14 @@ No cenário que recebe o webhook:
 1. Definir `MAKE_WEBHOOK_URL` no Netlify (Site configuration → Environment variables) e fazer novo deploy.
 2. Enviar um pedido real pelo formulário do site publicado.
 3. Confirmar que o cenário do Make o recebeu e que não aparece nenhum `lead_*` nos logs da function.
+
+## Checklist pós-deploy
+
+- [ ] **`MAKE_WEBHOOK_URL`** definida no Netlify (_Site configuration → Environment variables_, sem prefixo `VITE_`) e novo deploy feito depois de a definir.
+- [ ] **Lead de teste** enviado pelo formulário do site publicado; aparece a mensagem "Obrigado…".
+- [ ] O pedido **chegou ao cenário do Make** (histórico de execuções) com nome, email, serviço e `idPedido`.
+- [ ] **Logs da function** sem erros: _Logs & metrics → Functions → `lead`_ não mostra nenhum `lead_*` para esse pedido.
+- [ ] **Alertas do Make** ativos: notificações de erro do cenário e "Allow storing of incomplete executions".
+- [ ] **Domínio**: se mudar, definir `VITE_SITE_URL=https://dominio-final` no Netlify e fazer novo deploy; confirmar em `/robots.txt`, `/sitemap.xml` e no código-fonte da página (canonical e `og:url`).
+- [ ] **Partilha**: colar o URL no LinkedIn/WhatsApp e confirmar a imagem e o título.
+- [ ] **Telemóvel real** (iOS e Android): página carrega sem a cena 3D, menu abre e fecha, formulário envia, links de email/telefone abrem a app certa, "Adicionar ao ecrã principal" mostra o ícone.
