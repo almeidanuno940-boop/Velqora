@@ -1,9 +1,20 @@
 /**
  * Endereço público do site (sem barra final). Usado no canonical, og:url e imagens de partilha.
- * Quando houver domínio definitivo, trocar SÓ aqui: robots.txt e sitemap.xml são gerados a partir
- * desta constante por scripts/sync-site-url.mjs (corre antes de cada build).
+ *
+ * Para trocar de domínio há duas opções, ambas seguidas de novo build/deploy:
+ *  1. definir a variável de ambiente VITE_SITE_URL (ex.: no Netlify: Site configuration >
+ *     Environment variables) — sobrepõe o valor abaixo, sem tocar no código;
+ *  2. alterar DEFAULT_SITE_URL.
+ * robots.txt e sitemap.xml são gerados com o mesmo valor por scripts/sync-site-url.mjs (corre antes
+ * de cada build). Se mudar DEFAULT_SITE_URL, mantenha a linha no formato atual: o script lê-a.
  */
-export const SITE_URL = "https://screenshot-magic-8550.lovable.app";
+const DEFAULT_SITE_URL = "https://screenshot-magic-8550.lovable.app";
+const envSiteUrl = (import.meta as { env?: Record<string, string | undefined> }).env?.[
+  "VITE_SITE_URL"
+]
+  ?.trim()
+  .replace(/\/+$/, "");
+export const SITE_URL = envSiteUrl || DEFAULT_SITE_URL;
 
 export const CONTACT = {
   email: "nunoalmeida3000@gmail.com",

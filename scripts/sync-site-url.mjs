@@ -1,11 +1,12 @@
-// Gera public/robots.txt e public/sitemap.xml a partir de SITE_URL (src/content/site.ts),
-// para o domínio só ter de ser trocado num sítio. Corre antes do build (ver netlify.toml e "prebuild").
+// Gera public/robots.txt e public/sitemap.xml a partir do endereço do site, para o domínio só ter de ser
+// trocado num sítio: a variável de ambiente VITE_SITE_URL (se definida) ou DEFAULT_SITE_URL em
+// src/content/site.ts. Corre antes do build (ver netlify.toml e "prebuild").
 import { readFileSync, writeFileSync } from "node:fs";
 
 const source = readFileSync(new URL("../src/content/site.ts", import.meta.url), "utf8");
-const match = source.match(/export const SITE_URL\s*=\s*"([^"]+)"/);
-if (!match) throw new Error("SITE_URL não encontrado em src/content/site.ts");
-const siteUrl = match[1].replace(/\/+$/, "");
+const match = source.match(/const DEFAULT_SITE_URL\s*=\s*"([^"]+)"/);
+if (!match) throw new Error("DEFAULT_SITE_URL não encontrado em src/content/site.ts");
+const siteUrl = (process.env.VITE_SITE_URL?.trim() || match[1]).replace(/\/+$/, "");
 if (!/^https?:\/\/[^/\s]+$/.test(siteUrl)) throw new Error(`SITE_URL inválido: ${siteUrl}`);
 
 const robots = `User-agent: Googlebot
