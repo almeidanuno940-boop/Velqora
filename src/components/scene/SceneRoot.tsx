@@ -38,7 +38,12 @@ export function SceneRoot() {
     const gl = detectWebGL();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const force = params.get("scene") === "force";
-    if (params.get("scene") === "off" || !gl.ok || (gl.software && !force)) {
+    // Poupança de dados ou ligação 2G: não descarregar ~1 MB de three.js só para o fundo.
+    const conn = (
+      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
+    ).connection;
+    const lean = !!conn?.saveData || /^(slow-2g|2g)$/.test(conn?.effectiveType ?? "");
+    if (params.get("scene") === "off" || !gl.ok || (gl.software && !force) || (lean && !force)) {
       setMode({ kind: "static" });
       return stop;
     }
