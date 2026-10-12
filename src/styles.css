@@ -11,8 +11,7 @@
 @import "@fontsource/geist/latin-700.css";
 @import "@fontsource/geist-mono/latin-400.css";
 @import "@fontsource/geist-mono/latin-500.css";
-@import "@fontsource/instrument-serif/latin-400.css";
-@import "@fontsource/instrument-serif/latin-400-italic.css";
+@import "@fontsource-variable/bricolage-grotesque/wght.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -20,7 +19,8 @@
  * Velqora — direção visual
  * Noite de sala de controlo: tinta azul-quase-preta, texto mineral,
  * âmbar para o "caos" (dados em bruto) e ciano-menta para a "clareza" (dados ordenados).
- * Display: Instrument Serif · Texto: Geist · Rótulos: Geist Mono.
+ * Display: Bricolage Grotesque · Texto: Geist · Geist Mono só para dados (preços, fluxos).
+ * Um só gesto ousado (a cena 3D); o resto é calmo: listas com linhas finas, hierarquia pelo tipo.
  */
 
 /*
@@ -29,11 +29,11 @@
  * Liberation * são métricamente compatíveis com Times/Arial/Courier (Linux, Android).
  */
 @font-face {
-  font-family: "Instrument Serif Fallback";
-  src: local("Times New Roman"), local("Times"), local("Liberation Serif");
-  size-adjust: 83.5%;
-  ascent-override: 118.6%;
-  descent-override: 37.1%;
+  font-family: "Bricolage Fallback";
+  src: local("Arial"), local("Helvetica"), local("Liberation Sans");
+  size-adjust: 98%;
+  ascent-override: 96%;
+  descent-override: 25%;
   line-gap-override: 0%;
 }
 @font-face {
@@ -55,7 +55,8 @@
 
 @theme inline {
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", "Instrument Serif Fallback", ui-serif, Georgia, serif;
+  --font-display:
+    "Bricolage Grotesque Variable", "Bricolage Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -92,7 +93,7 @@
 
 :root {
   color-scheme: dark;
-  --radius: 0.875rem;
+  --radius: 0.75rem;
 
   /* superfícies */
   --background: oklch(0.145 0.018 255); /* #06090f */
@@ -182,52 +183,36 @@
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
 }
-@utility eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+@utility label {
+  font-size: 0.8125rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--color-primary);
+  letter-spacing: 0.01em;
+  color: var(--color-muted-foreground);
 }
 @utility headline {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
+  font-weight: 500;
+  font-variation-settings: "wdth" 90;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
 }
-@utility text-gradient {
-  background: linear-gradient(100deg, var(--color-primary) 10%, var(--color-sky) 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
 }
 @utility panel {
   position: relative;
   border: 1px solid var(--color-border);
   background:
     linear-gradient(180deg, oklch(1 0 0 / 0.045), oklch(1 0 0 / 0.012)), oklch(0.16 0.02 253 / 0.86);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
 }
 @utility hairline {
   height: 1px;
   background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.16), transparent);
-}
-
-/* eyebrow com traço inicial */
-.eyebrow::before {
-  content: "";
-  width: 1.5rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.7;
-}
-.eyebrow.eyebrow--ember {
-  color: var(--color-ember);
 }
 
 /* ——— Spotlight: brilho que segue o rato dentro de cartões [data-spot] ——— */

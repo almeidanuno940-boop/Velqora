@@ -26,8 +26,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
       <div className="backdrop" aria-hidden="true" />
       <Header />
       <main id="conteudo" className="mx-auto max-w-3xl px-5 pb-28 pt-40 sm:px-8">
-        <p className="eyebrow">Documento legal</p>
-        <h1 className="headline mt-5 text-5xl sm:text-6xl">{title}</h1>
+        <h1 className="headline text-5xl sm:text-6xl">{title}</h1>
         <div className="mt-8 rounded-xl border border-ember/30 bg-ember/10 px-5 py-4 text-sm text-foreground/90">
           Texto a rever: este documento é provisório e será substituído por uma versão revista.
         </div>

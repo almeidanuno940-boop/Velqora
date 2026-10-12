@@ -1,22 +1,5 @@
 import { useEffect, useRef } from "react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  Mail,
-  Phone,
-  Inbox,
-  Layers,
-  Repeat,
-  BarChart3,
-  Building2,
-  Stethoscope,
-  HardHat,
-  Ruler,
-  Wrench,
-  Briefcase,
-  Plus,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Mail, Phone } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -40,7 +23,9 @@ import { CtaLink, Reveal, SectionHead, SplitHeading } from "./Reveal";
 import { ContactForm } from "./ContactForm";
 
 const wrap = "mx-auto max-w-7xl px-5 sm:px-8";
-const section = "relative py-28 sm:py-40";
+const section = "relative py-24 sm:py-36";
+/** linha fina que separa itens de uma lista */
+const rule = "border-t border-white/[0.1]";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /* ————————————————————————————————— Hero */
@@ -50,25 +35,20 @@ export function Hero() {
     <section
       id="inicio"
       data-scene="hero"
-      className="relative flex min-h-[100svh] flex-col justify-end pb-14 pt-[calc(var(--header-h)+3rem)] sm:pb-16"
+      className="relative flex min-h-[100svh] flex-col justify-end pb-14 pt-[calc(var(--header-h)+3rem)] sm:pb-20"
     >
       <div className={cn(wrap, "grid w-full items-end gap-12 lg:grid-cols-[1fr_auto]")}>
-        <div className="max-w-4xl">
-          <Reveal intro>
-            <p className="eyebrow">Velqora · Automation &amp; Data Solutions</p>
-          </Reveal>
+        <div className="max-w-5xl">
           <SplitHeading
             intro
+            tonal
             as="h1"
             text={"Automatize o trabalho.\n_Transforme os seus dados._"}
-            className="mt-6 text-[3.15rem] sm:text-7xl lg:text-[6.4rem] xl:text-[7.2rem]"
+            className="text-[3.1rem] sm:text-7xl lg:text-[6.2rem] xl:text-[7rem]"
             delay={120}
           />
           <Reveal intro delay={350}>
-            <p className="mt-7 font-mono text-xs uppercase tracking-[0.2em] text-ember">
-              Automatize. Simplifique. Cresça.
-            </p>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85 sm:text-xl">
               A Velqora cria soluções de automação, inteligência artificial e análise de dados que
               ajudam empresas a simplificar processos, poupar tempo e trabalhar de forma mais
               eficiente.
@@ -82,32 +62,12 @@ export function Hero() {
               Explorar soluções
             </CtaLink>
           </Reveal>
-          <Reveal
-            intro
-            delay={600}
-            className="mt-9 flex flex-col text-sm text-muted-foreground sm:flex-row sm:gap-7"
-          >
-            <a
-              href={CONTACT.emailHref}
-              className="inline-flex min-h-11 items-center gap-2 transition-colors hover:text-primary"
-            >
-              <Mail className="size-4" />
-              {CONTACT.email}
-            </a>
-            <a
-              href={CONTACT.phoneHref}
-              className="inline-flex min-h-11 items-center gap-2 transition-colors hover:text-primary"
-            >
-              <Phone className="size-4" />
-              {CONTACT.phone}
-            </a>
-          </Reveal>
         </div>
 
         <Reveal intro delay={700} className="hidden lg:block">
           <div className="panel w-72 !bg-[oklch(0.15_0.02_253/0.6)] p-4 backdrop-blur-md">
-            <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-              <span>Workflow · Leads</span>
+            <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
+              <span>Workflow de leads</span>
               <span className="inline-flex items-center gap-1.5 text-primary">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex size-full rounded-full bg-primary opacity-75 motion-safe:animate-ping" />
@@ -124,30 +84,12 @@ export function Hero() {
                   style={{ animationDelay: `${i}s` }}
                 >
                   <span className="font-mono text-[10px] opacity-70">{pad(i + 1)}</span>
-                  <span className="font-medium uppercase tracking-wide">{s}</span>
+                  <span className="font-medium">{s}</span>
                 </li>
               ))}
             </ol>
-            <p className="mt-3 border-t border-white/[0.07] pt-3 text-xs text-muted-foreground">
-              Automação pensada para processos reais de pequenas empresas.
-            </p>
           </div>
         </Reveal>
-      </div>
-
-      <div
-        className={cn(wrap, "mt-14 flex w-full items-center justify-between")}
-        aria-hidden="true"
-      >
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          Do caos à clareza
-        </span>
-        <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          Scroll
-          <span className="relative h-10 w-px overflow-hidden bg-white/10">
-            <span className="scroll-cue absolute inset-x-0 top-0 h-1/2 bg-primary" />
-          </span>
-        </span>
       </div>
     </section>
   );
@@ -155,40 +97,32 @@ export function Hero() {
 
 /* ————————————————————————————————— Problema */
 
-const problemIcons = [Inbox, Layers, Repeat, BarChart3];
-
 export function Problem() {
   return (
     <section data-scene="problem" className={section}>
       <div className={wrap}>
-        <SectionHead
-          index="01"
-          eyebrow="O problema"
-          title="Quanto tempo perde a sua empresa com tarefas que _poderiam ser automáticas?_"
-        />
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PROBLEMS.map((p, i) => {
-            const Icon = problemIcons[i] ?? Inbox;
-            return (
-              <Reveal key={p.title} delay={i * 90} className="h-full">
-                <article
-                  data-spot
-                  className="panel group h-full p-6 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="grid size-10 place-items-center rounded-xl border border-ember/25 bg-ember/10 text-ember">
-                      <Icon className="size-[18px]" />
-                    </span>
-                    <span className="font-mono text-xs text-muted-foreground">{pad(i + 1)}</span>
-                  </div>
-                  <h3 className="mt-10 text-lg font-semibold tracking-tight">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
-        <Reveal className="mt-12 flex flex-col items-start gap-6 border-t border-white/[0.08] pt-8 md:flex-row md:items-center md:justify-between">
+        <SectionHead title="Quanto tempo perde a sua empresa com tarefas que podem ser automáticas?" />
+        <ul className="mt-16 sm:mt-20">
+          {PROBLEMS.map((p, i) => (
+            <Reveal as="li" key={p.title} delay={i * 70}>
+              <div
+                className={cn(
+                  rule,
+                  "grid gap-3 py-8 md:grid-cols-[1.1fr_1fr] md:items-baseline md:gap-16 md:py-10",
+                )}
+              >
+                <h3 className="display text-2xl text-ember sm:text-4xl">{p.title}</h3>
+                <p className="max-w-md text-lg leading-relaxed text-muted-foreground">{p.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </ul>
+        <Reveal
+          className={cn(
+            rule,
+            "flex flex-col items-start gap-6 pt-8 md:flex-row md:items-center md:justify-between",
+          )}
+        >
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
             Formulários, emails, folhas de cálculo e tarefas manuais podem tornar o acompanhamento
             diário mais lento e aumentar o risco de perder informação importante.
@@ -206,71 +140,49 @@ export function Problem() {
 
 type Service = (typeof SERVICES)[number];
 
-function ServiceCard({
-  s,
-  n,
-  className,
-}: {
-  s: Service;
-  n: number;
-  className?: string | undefined;
-}) {
+function ServiceRow({ s, i }: { s: Service; i: number }) {
   return (
-    <Reveal delay={(n % 3) * 90} className={cn("h-full", className)}>
+    <Reveal as="li" delay={(i % 2) * 70}>
       <article
-        data-spot
-        className="panel group flex h-full flex-col p-7 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5"
+        className={cn(rule, "group grid gap-8 py-10 lg:grid-cols-[1fr_1.15fr] lg:gap-16 lg:py-12")}
       >
-        <div className="flex items-start justify-between gap-4">
-          <span className="font-mono text-xs text-muted-foreground">{pad(n)}</span>
-          <span className="rounded-full border border-white/10 px-3 py-1 font-mono text-[11px] text-foreground/90">
-            {s.price}
-          </span>
-        </div>
-        <h3 className="mt-8 font-display text-[2rem] leading-[1.05] tracking-tight">{s.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-        <dl className="mt-6 space-y-3 border-t border-white/[0.07] pt-5 text-sm">
-          <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-ember">
-              Resolve
-            </dt>
-            <dd className="mt-1 text-foreground/85">{s.problem}</dd>
-          </div>
-          <div>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
-              Benefício
-            </dt>
-            <dd className="mt-1 text-foreground/85">{s.benefit}</dd>
-          </div>
-        </dl>
-        <ul className="mt-6 flex flex-wrap gap-1.5" aria-label="Inclui">
-          {s.includes.map((x) => (
-            <li
-              key={x}
-              className="rounded-full border border-white/[0.09] bg-white/[0.03] px-2.5 py-1 text-xs text-foreground/80"
-            >
-              {x}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-auto pt-8">
+        <div className="flex flex-col items-start">
+          <h3 className="display text-3xl sm:text-[2.6rem]">{s.title}</h3>
+          <p className="mt-3 font-mono text-sm text-primary">{s.price}</p>
+          <p className="mt-5 max-w-md leading-relaxed text-muted-foreground">{s.desc}</p>
           <a
             href="#contacto"
-            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-primary"
+            className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-foreground underline decoration-primary/60 underline-offset-[6px] transition-colors hover:text-primary"
           >
             {s.cta}
             <ArrowRight className="size-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
           </a>
+        </div>
+        <div className="space-y-6">
+          <dl className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <dt className="label text-ember">Resolve</dt>
+              <dd className="mt-1.5 leading-relaxed text-foreground/90">{s.problem}</dd>
+            </div>
+            <div>
+              <dt className="label text-primary">Benefício</dt>
+              <dd className="mt-1.5 leading-relaxed text-foreground/90">{s.benefit}</dd>
+            </div>
+          </dl>
+          <div>
+            <p className="label">Inclui</p>
+            <p className="mt-1.5 leading-relaxed text-foreground/75">{s.includes.join(", ")}.</p>
+          </div>
         </div>
       </article>
     </Reveal>
   );
 }
 
-function FeaturedService({ s, n }: { s: Service; n: number }) {
+function FeaturedService({ s }: { s: Service }) {
   if (!("flow" in s)) return null;
   return (
-    <Reveal className="md:col-span-2 lg:col-span-6">
+    <Reveal className="mt-10">
       <article
         data-spot
         className="panel group grid gap-10 overflow-hidden p-7 sm:p-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14"
@@ -280,25 +192,17 @@ function FeaturedService({ s, n }: { s: Service; n: number }) {
           className="pointer-events-none absolute -right-40 -top-40 size-[520px] rounded-full bg-primary/10 blur-3xl"
         />
         <div className="relative flex flex-col">
-          <p className="eyebrow">
-            <span className="text-muted-foreground">{pad(n)}</span>Sistema completo
-          </p>
-          <h3 className="mt-6 font-display text-[2.5rem] leading-[1.02] tracking-tight sm:text-5xl">
-            {s.title}
-          </h3>
+          <p className="label text-primary">O sistema completo</p>
+          <h3 className="display mt-4 text-4xl sm:text-5xl">{s.title}</h3>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">{s.desc}</p>
-          <dl className="mt-6 grid gap-4 text-sm sm:grid-cols-2">
+          <dl className="mt-6 grid gap-5 text-sm sm:grid-cols-2">
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-ember">
-                Resolve
-              </dt>
-              <dd className="mt-1 text-foreground/85">{s.problem}</dd>
+              <dt className="label text-ember">Resolve</dt>
+              <dd className="mt-1 text-foreground/90">{s.problem}</dd>
             </div>
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
-                Benefício
-              </dt>
-              <dd className="mt-1 text-foreground/85">{s.benefit}</dd>
+              <dt className="label text-primary">Benefício</dt>
+              <dd className="mt-1 text-foreground/90">{s.benefit}</dd>
             </div>
           </dl>
           <ul className="mt-7 grid gap-x-6 gap-y-2.5 text-sm sm:grid-cols-2" aria-label="Inclui">
@@ -311,7 +215,7 @@ function FeaturedService({ s, n }: { s: Service; n: number }) {
           </ul>
           <div className="mt-auto flex flex-col gap-5 pt-9 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="font-display text-4xl tracking-tight">{s.price}</p>
+              <p className="display text-4xl">{s.price}</p>
               {"note" in s && <p className="mt-1.5 text-xs text-muted-foreground">{s.note}</p>}
             </div>
             <CtaLink href="#demonstracao" arrow className="shrink-0">
@@ -320,10 +224,8 @@ function FeaturedService({ s, n }: { s: Service; n: number }) {
           </div>
         </div>
 
-        <div className="relative rounded-2xl border border-white/[0.08] bg-[oklch(0.12_0.016_255/0.7)] p-6 sm:p-8">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-            Fluxo do sistema
-          </p>
+        <div className="relative rounded-xl border border-white/[0.08] bg-[oklch(0.12_0.016_255/0.7)] p-6 sm:p-8">
+          <p className="label">Fluxo do sistema</p>
           <ol className="relative mt-6 space-y-2">
             <span
               aria-hidden="true"
@@ -359,28 +261,19 @@ function FeaturedService({ s, n }: { s: Service; n: number }) {
 export function Services() {
   const regular = SERVICES.filter((s) => !("featured" in s && s.featured));
   const featured = SERVICES.find((s) => "featured" in s && s.featured);
-  const spans = [
-    "lg:col-span-2",
-    "lg:col-span-2",
-    "lg:col-span-2",
-    "lg:col-span-3",
-    "md:col-span-2 lg:col-span-3",
-  ];
   return (
     <section id="servicos" data-scene="services" className={section}>
       <div className={wrap}>
         <SectionHead
-          index="02"
-          eyebrow="Serviços"
-          title="Serviços que transformam _processos em resultados._"
+          title="Serviços que transformam processos em resultados."
           sub="Soluções práticas para automatizar processos e transformar dados em decisões."
         />
-        <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+        <ul className="mt-16 sm:mt-20">
           {regular.map((s, i) => (
-            <ServiceCard key={s.title} s={s} n={i + 1} className={spans[i]} />
+            <ServiceRow key={s.title} s={s} i={i} />
           ))}
-          {featured && <FeaturedService s={featured} n={regular.length + 1} />}
-        </div>
+        </ul>
+        {featured && <FeaturedService s={featured} />}
       </div>
     </section>
   );
@@ -388,47 +281,41 @@ export function Services() {
 
 /* ————————————————————————————————— Setores */
 
-const sectorIcons = [Building2, Stethoscope, HardHat, Ruler, Wrench, Briefcase];
-
 export function Sectors() {
   return (
     <section id="solucoes" data-scene="sectors" className={section}>
       <div className={wrap}>
         <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <SectionHead index="03" eyebrow="Soluções" title="Soluções adaptadas _ao seu negócio._" />
+          <SectionHead title="Soluções adaptadas ao seu negócio." />
           <Reveal>
             <CtaLink href="#contacto" variant="ghost" arrow>
               Encontrar uma solução para a minha empresa
             </CtaLink>
           </Reveal>
         </div>
-        <ul className="mt-16 border-t border-white/[0.09]">
-          {SECTORS.map((s, i) => {
-            const Icon = sectorIcons[i] ?? Briefcase;
-            return (
-              <Reveal as="li" key={s.title} delay={i * 60}>
-                <div className="group relative grid gap-4 border-b border-white/[0.09] py-7 sm:grid-cols-[3rem_minmax(0,1.1fr)_minmax(0,1.6fr)] sm:items-center sm:gap-8 lg:py-9">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-y-0 -left-4 -right-4 -z-10 origin-left scale-x-0 rounded-2xl bg-gradient-to-r from-primary/[0.08] to-transparent transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
-                  />
-                  <span className="font-mono text-xs text-muted-foreground">{pad(i + 1)}</span>
-                  <h3 className="flex items-center gap-4 font-display text-3xl tracking-tight transition-transform duration-700 ease-out-expo group-hover:translate-x-2 sm:text-4xl">
-                    <Icon className="size-5 shrink-0 text-primary" />
-                    {s.title}
-                  </h3>
-                  <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-muted-foreground">
-                    {s.items.map((x) => (
-                      <li key={x} className="flex items-center gap-2">
-                        <span className="size-1 rounded-full bg-primary/70" />
-                        {x}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            );
-          })}
+        <ul className="mt-16 sm:mt-20">
+          {SECTORS.map((s, i) => (
+            <Reveal as="li" key={s.title} delay={i * 50}>
+              <div
+                className={cn(
+                  rule,
+                  "group relative grid gap-4 py-7 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] sm:items-center sm:gap-12 lg:py-9",
+                )}
+              >
+                <h3 className="display text-3xl transition-transform duration-700 ease-out-expo group-hover:translate-x-2 sm:text-5xl">
+                  {s.title}
+                </h3>
+                <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-[15px] text-muted-foreground">
+                  {s.items.map((x) => (
+                    <li key={x} className="flex items-center gap-2">
+                      <span className="size-1 rounded-full bg-primary/70" />
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </ul>
       </div>
     </section>
@@ -507,13 +394,9 @@ export function Demo() {
     <section id="demonstracao" data-scene="demo" className={section}>
       <div className={cn(wrap, "grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20")}>
         <div className="lg:sticky lg:top-32 lg:self-start">
-          <SectionHead
-            index="04"
-            eyebrow="Demonstração"
-            title="Veja como uma automação pode funcionar _na prática._"
-          />
+          <SectionHead title="Veja como uma automação pode funcionar na prática." />
           <Reveal delay={200}>
-            <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            <p className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
               {[
                 "Formulário",
                 "Make",
@@ -529,7 +412,7 @@ export function Demo() {
                 </span>
               ))}
             </p>
-            <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
               Exemplo demonstrativo desenvolvido pela Velqora. Os dados e o fluxo ilustram uma
               possibilidade e não representam um cliente real.
             </p>
@@ -556,7 +439,7 @@ export function Demo() {
             <li
               key={s}
               data-step
-              className="group/step relative rounded-2xl border border-white/[0.07] bg-[oklch(0.15_0.02_253/0.72)] px-5 py-4 transition-all duration-700 ease-out-expo [&.is-active]:border-primary/30 [&.is-active]:bg-[oklch(0.17_0.03_200/0.75)]"
+              className="group/step relative rounded-xl border border-white/[0.07] bg-[oklch(0.15_0.02_253/0.72)] px-5 py-4 transition-all duration-700 ease-out-expo [&.is-active]:border-primary/30 [&.is-active]:bg-[oklch(0.17_0.03_200/0.75)]"
             >
               <span
                 aria-hidden="true"
@@ -581,20 +464,14 @@ export function HowItWorks() {
   return (
     <section id="como-funciona" data-scene="how" className={section}>
       <div className={wrap}>
-        <SectionHead
-          index="05"
-          eyebrow="Processo"
-          title="Como funciona: _cinco passos, sem complicações._"
-        />
-        <ol className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <SectionHead title="Como funciona: cinco passos, sem complicações." />
+        <ol className="mt-16 grid gap-x-8 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-5">
           {STEPS.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={i * 90} className="h-full">
-              <div data-spot className="panel group flex h-full flex-col p-6">
-                <span className="font-display text-7xl leading-none tracking-tight text-transparent transition-colors duration-700 [-webkit-text-stroke:1px_oklch(0.87_0.13_178/0.6)] group-hover:text-primary/15">
-                  {pad(i + 1)}
-                </span>
-                <h3 className="mt-10 text-lg font-semibold tracking-tight">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+            <Reveal as="li" key={s.title} delay={i * 80} className="h-full">
+              <div className={cn(rule, "h-full pt-5")}>
+                <span className="display block text-6xl text-primary/80">{i + 1}</span>
+                <h3 className="display mt-8 text-2xl">{s.title}</h3>
+                <p className="mt-2 leading-relaxed text-muted-foreground">{s.text}</p>
               </div>
             </Reveal>
           ))}
@@ -611,12 +488,7 @@ export function Tools() {
   return (
     <section data-scene="tools" className={cn(section, "overflow-hidden")}>
       <div className={wrap}>
-        <SectionHead
-          center
-          index="06"
-          eyebrow="Tecnologia"
-          title="Ferramentas que podem _trabalhar em conjunto._"
-        />
+        <SectionHead title="Ferramentas que podem trabalhar em conjunto." />
       </div>
       <Reveal className="marquee mt-16" delay={150}>
         <ul className="sr-only">
@@ -628,7 +500,7 @@ export function Tools() {
           {row.map((t, i) => (
             <span
               key={`${t}-${i}`}
-              className="flex items-center gap-8 whitespace-nowrap pr-8 font-display text-5xl tracking-tight text-foreground/90 sm:text-7xl"
+              className="display flex items-center gap-8 whitespace-nowrap pr-8 text-5xl text-foreground/90 sm:text-7xl"
             >
               {t}
               <span className="size-2 rounded-full bg-primary/70" />
@@ -637,12 +509,10 @@ export function Tools() {
         </div>
       </Reveal>
       <div className={wrap}>
-        <Reveal className="mt-16 text-center">
-          <p className="mx-auto max-w-2xl font-display text-3xl leading-tight tracking-tight text-foreground/90 sm:text-4xl">
-            Não vendemos ferramentas.{" "}
-            <span className="text-gradient italic">
-              Criamos soluções que ligam as ferramentas certas ao processo certo.
-            </span>
+        <Reveal className="mt-16">
+          <p className="display max-w-3xl text-3xl text-foreground/90 sm:text-4xl">
+            Não vendemos ferramentas. Criamos soluções que ligam as ferramentas certas ao processo
+            certo.
           </p>
         </Reveal>
       </div>
@@ -657,42 +527,37 @@ export function Pricing() {
     <section id="precos" data-scene="pricing" className={section}>
       <div className={wrap}>
         <SectionHead
-          center
-          index="07"
-          eyebrow="Preços"
-          title="Soluções simples _e transparentes._"
+          title="Soluções simples e transparentes."
           sub="Preços iniciais para projetos standard. Cada solução pode ser adaptada à complexidade do negócio."
         />
-        <div className="mt-16 grid items-stretch gap-4 lg:grid-cols-3">
+        <div className="mt-16 grid items-stretch gap-x-10 gap-y-12 sm:mt-20 lg:grid-cols-3">
           {PLANS.map((p, i) => (
-            <Reveal key={p.name} delay={i * 90} className="h-full">
+            <Reveal key={p.name} delay={i * 80} className="h-full">
               <div
                 data-spot
                 className={cn(
-                  "panel relative flex h-full flex-col p-8 transition-transform duration-700 ease-out-expo hover:-translate-y-1.5",
-                  p.featured &&
-                    "!border-primary/40 !bg-[linear-gradient(180deg,oklch(0.87_0.13_178/0.1),oklch(0.16_0.02_253/0.9)_45%)] shadow-[0_30px_80px_-30px_oklch(0.87_0.13_178/0.35)]",
+                  "relative flex h-full flex-col",
+                  p.featured
+                    ? "panel !border-primary/40 !bg-[linear-gradient(180deg,oklch(0.87_0.13_178/0.1),oklch(0.16_0.02_253/0.9)_45%)] p-8 shadow-[0_30px_80px_-30px_oklch(0.87_0.13_178/0.35)]"
+                    : cn(rule, "pt-8"),
                 )}
               >
                 {p.featured && (
-                  <span className="absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-primary-foreground">
+                  <span className="absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
                     Mais completo
                   </span>
                 )}
-                <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  {p.name}
-                </h3>
+                <h3 className="display text-2xl">{p.name}</h3>
                 <p className="mt-6 flex items-baseline gap-2">
                   <span className="text-sm text-muted-foreground">Desde</span>
-                  <span className="font-display text-6xl leading-none tracking-tight">
+                  <span className="display text-6xl leading-none">
                     {p.price.replace("Desde ", "")}
                   </span>
                 </p>
-                <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-6 leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground">Ideal para:</span> {p.ideal}
                 </p>
-                <div className="hairline my-7" />
-                <ul className="space-y-3 text-sm">
+                <ul className="mt-7 space-y-3 text-[15px]">
                   {p.includes.map((x) => (
                     <li key={x} className="flex items-center gap-3">
                       <Check className="size-4 shrink-0 text-primary" />
@@ -705,10 +570,10 @@ export function Pricing() {
                     href="#contacto"
                     aria-label={`Escolher o plano ${p.name}`}
                     className={cn(
-                      "inline-flex min-h-12 w-full items-center justify-center rounded-full text-sm font-medium transition-all duration-500 ease-out-expo",
+                      "inline-flex min-h-12 w-full items-center justify-center rounded-full text-[15px] font-medium transition-colors duration-300",
                       p.featured
-                        ? "bg-primary text-primary-foreground hover:shadow-[0_10px_40px_-10px_oklch(0.87_0.13_178/0.7)]"
-                        : "border border-white/15 hover:border-primary/60 hover:text-primary",
+                        ? "bg-primary text-primary-foreground hover:bg-[oklch(0.92_0.12_178)]"
+                        : "border border-white/20 hover:border-foreground/60 hover:bg-white/[0.05]",
                     )}
                   >
                     Escolher
@@ -718,23 +583,25 @@ export function Pricing() {
             </Reveal>
           ))}
         </div>
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <div className="mt-16">
           {[
             ["Projetos personalizados", "Desde €399 / orçamento personalizado"],
             ["Manutenção e acompanhamento", "Desde €50/mês"],
           ].map(([t, v], i) => (
-            <Reveal key={t} delay={i * 90}>
-              <div className="panel flex flex-col gap-2 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-                <span className="flex items-center gap-3 font-medium">
-                  <Plus className="size-4 text-primary" />
-                  {t}
-                </span>
-                <span className="text-sm text-muted-foreground sm:text-right">{v}</span>
+            <Reveal key={t} delay={i * 70}>
+              <div
+                className={cn(
+                  rule,
+                  "flex flex-col gap-1 py-5 sm:flex-row sm:items-baseline sm:justify-between",
+                )}
+              >
+                <span className="display text-xl">{t}</span>
+                <span className="text-muted-foreground">{v}</span>
               </div>
             </Reveal>
           ))}
         </div>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground">
+        <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Os preços apresentados são valores iniciais. O preço final depende da complexidade, número
           de integrações e necessidades específicas da empresa.
         </p>
@@ -750,11 +617,7 @@ export function About() {
     <section id="sobre" data-scene="about" className={section}>
       <div className={cn(wrap, "grid gap-14 lg:grid-cols-[1.25fr_0.75fr] lg:items-end")}>
         <div>
-          <SectionHead
-            index="08"
-            eyebrow="Sobre a Velqora"
-            title="Tecnologia útil para o _dia a dia das empresas._"
-          />
+          <SectionHead title="Tecnologia útil para o dia a dia das empresas." />
           <Reveal delay={150} className="mt-8 max-w-2xl space-y-5 text-lg leading-relaxed">
             <p className="text-foreground/90">
               A Velqora nasceu com um objetivo simples: tornar a tecnologia útil para pequenas e
@@ -772,17 +635,15 @@ export function About() {
           </Reveal>
         </div>
         <Reveal delay={200}>
-          <dl className="panel divide-y divide-white/[0.07] overflow-hidden">
+          <dl>
             {[
               ["Fundador", "Nuno Almeida"],
               ["Base", "Portugal"],
               ["Foco", "Automation + Data Analytics"],
             ].map(([k, v]) => (
-              <div key={k} className="px-7 py-6">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  {k}
-                </dt>
-                <dd className="mt-2 font-display text-3xl tracking-tight">{v}</dd>
+              <div key={k} className={cn(rule, "py-6")}>
+                <dt className="label">{k}</dt>
+                <dd className="display mt-1.5 text-3xl">{v}</dd>
               </div>
             ))}
           </dl>
@@ -799,7 +660,7 @@ export function Faq() {
     <section id="faq" data-scene="faq" className={section}>
       <div className={cn(wrap, "grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20")}>
         <div className="lg:sticky lg:top-32 lg:self-start">
-          <SectionHead index="09" eyebrow="FAQ" title="Perguntas _frequentes._" />
+          <SectionHead title="Perguntas frequentes." />
           <Reveal delay={200}>
             <p className="mt-6 max-w-sm text-muted-foreground">
               Não encontra a resposta?{" "}
@@ -814,17 +675,13 @@ export function Faq() {
           </Reveal>
         </div>
         <Reveal delay={100}>
-          <Accordion type="single" collapsible className="panel px-6 sm:px-8">
+          <Accordion type="single" collapsible className="border-b border-white/[0.1]">
             {FAQS.map((f, i) => (
-              <AccordionItem
-                key={f.q}
-                value={`f${i}`}
-                className="border-white/[0.07] last:border-b-0"
-              >
-                <AccordionTrigger className="gap-6 py-6 text-left text-base font-medium hover:text-primary hover:no-underline sm:text-lg">
+              <AccordionItem key={f.q} value={`f${i}`} className="border-white/[0.1]">
+                <AccordionTrigger className="display gap-6 py-6 text-left text-xl hover:text-primary hover:no-underline sm:text-2xl">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="pb-6 text-base leading-relaxed text-muted-foreground">
+                <AccordionContent className="max-w-2xl pb-6 text-base leading-relaxed text-muted-foreground">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
@@ -843,18 +700,14 @@ export function Contact() {
     <section id="contacto" data-scene="contact" className={section}>
       <div className={cn(wrap, "grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20")}>
         <div>
-          <SectionHead
-            index="10"
-            eyebrow="Contacto"
-            title="Tem um processo que _poderia ser automático?_"
-          />
+          <SectionHead title="Tem um processo que poderia ser automático?" />
           <Reveal delay={150}>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               Conte-nos como a sua empresa trabalha atualmente. Podemos identificar onde a automação
               pode poupar tempo e simplificar o processo.
             </p>
           </Reveal>
-          <Reveal delay={220} className="mt-10 space-y-3">
+          <Reveal delay={220} className="mt-10">
             {[
               { href: CONTACT.emailHref, Icon: Mail, label: "Email", value: CONTACT.email },
               { href: CONTACT.phoneHref, Icon: Phone, label: "Telefone", value: CONTACT.phone },
@@ -862,31 +715,20 @@ export function Contact() {
               <a
                 key={label}
                 href={href}
-                data-spot
-                className="panel group flex items-center gap-4 p-5 transition-colors hover:border-primary/40"
+                className={cn(
+                  rule,
+                  "group flex items-center gap-4 py-5 transition-colors hover:text-primary",
+                )}
               >
-                <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-primary/25 bg-primary/10">
-                  <Icon className="size-5 text-primary" />
-                </span>
+                <Icon className="size-5 shrink-0 text-primary" />
                 <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    {label}
-                  </span>
-                  <span className="mt-0.5 block break-all font-medium">{value}</span>
+                  <span className="label block">{label}</span>
+                  <span className="mt-0.5 block break-all text-lg font-medium">{value}</span>
                 </span>
                 <ArrowUpRight className="size-5 shrink-0 text-muted-foreground transition-all duration-500 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
               </a>
             ))}
-          </Reveal>
-          <Reveal delay={280} className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <CtaLink href={CONTACT.emailHref} variant="ghost">
-              <Mail className="size-4" />
-              Enviar email
-            </CtaLink>
-            <CtaLink href={CONTACT.phoneHref} variant="ghost">
-              <Phone className="size-4" />
-              Ligar agora
-            </CtaLink>
+            <div className={rule} />
           </Reveal>
         </div>
         <Reveal delay={150}>
@@ -902,19 +744,20 @@ export function Contact() {
 export function FinalCta() {
   return (
     <section data-scene="final" className="relative py-32 sm:py-48">
-      <div className={cn(wrap, "text-center")}>
+      <div className={wrap}>
         <SplitHeading
+          tonal
           text={"Menos tarefas manuais.\n_Mais tempo para o seu negócio._"}
-          className="mx-auto max-w-5xl text-[2.9rem] sm:text-7xl lg:text-[6rem]"
+          className="max-w-5xl text-[2.9rem] sm:text-7xl lg:text-[6rem]"
         />
         <Reveal delay={250}>
-          <p className="mx-auto mt-8 max-w-lg text-lg text-muted-foreground">
+          <p className="mt-8 max-w-lg text-lg text-muted-foreground">
             Descubra onde a automação pode simplificar o trabalho da sua empresa.
           </p>
         </Reveal>
         <Reveal
           delay={350}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
         >
           <CtaLink href="#contacto" arrow>
             Quero automatizar o meu negócio

@@ -12,8 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 // fontes críticas do primeiro ecrã: pré-carregadas para o título do hero não esperar pelo CSS
-import serifFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url";
-import serifItalicFont from "@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url";
+import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
 import sansFont from "@fontsource/geist/files/geist-latin-400-normal.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -25,8 +24,7 @@ function NotFoundComponent() {
       <meta name="robots" content="noindex" />
       <div className="backdrop" aria-hidden="true" />
       <main id="conteudo" className="max-w-md text-center">
-        <p className="eyebrow">Erro 404</p>
-        <h1 className="headline mt-5 text-[7rem] text-gradient">404</h1>
+        <h1 className="headline text-[7rem] text-primary">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           A página que procura não existe ou foi movida.
@@ -100,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "apple-touch-icon", href: "/favicon.svg" },
       { rel: "manifest", href: "/site.webmanifest" },
-      ...[serifFont, serifItalicFont, sansFont].map((href) => ({
+      ...[displayFont, sansFont].map((href) => ({
         rel: "preload",
         href,
         as: "font",

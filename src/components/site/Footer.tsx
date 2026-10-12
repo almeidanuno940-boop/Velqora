@@ -9,17 +9,11 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Logo />
-          <p className="mt-6 max-w-xs font-display text-3xl leading-tight tracking-tight">
-            Automatize. Simplifique. <span className="text-gradient italic">Cresça.</span>
-          </p>
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            Automation &amp; Data Solutions
-          </p>
+          <p className="mt-6 max-w-xs display text-3xl">Automatize. Simplifique. Cresça.</p>
+          <p className="label mt-3">Automation &amp; Data Solutions</p>
         </div>
         <nav aria-label="Rodapé">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            Navegação
-          </p>
+          <p className="label">Navegação</p>
           <ul className="mt-5 grid grid-cols-2 gap-x-4 text-sm">
             {NAV.map((n) => (
               <li key={n.href}>
@@ -34,9 +28,7 @@ export function Footer() {
           </ul>
         </nav>
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            Contacto
-          </p>
+          <p className="label">Contacto</p>
           <div className="mt-5 space-y-3 text-sm">
             <a
               href={CONTACT.emailHref}

@@ -61,8 +61,9 @@ export function Reveal({
 }
 
 /**
- * Título com entrada palavra-a-palavra. Texto entre _sublinhados_ fica em itálico
- * com o gradiente da marca. O texto completo fica disponível para leitores de ecrã.
+ * Título com entrada palavra-a-palavra. Com `tonal`, o texto fora dos _sublinhados_ fica
+ * esbatido e o resto em destaque (problema → solução). Sem `tonal`, os sublinhados são ignorados.
+ * O texto completo fica disponível para leitores de ecrã.
  */
 export function SplitHeading({
   text,
@@ -70,12 +71,14 @@ export function SplitHeading({
   className,
   delay = 0,
   intro,
+  tonal,
 }: {
   text: string;
   as?: "h1" | "h2" | "h3";
   className?: string;
   delay?: number;
   intro?: boolean;
+  tonal?: boolean;
 }) {
   const ref = useReveal<HTMLHeadingElement>(intro);
   const Tag = as as "h2";
@@ -104,7 +107,7 @@ export function SplitHeading({
                     <span className="split-word">
                       <span
                         style={{ "--w": w++ } as CSSProperties}
-                        className={cn(i % 2 === 1 && "text-gradient pr-[0.08em] italic")}
+                        className={cn(tonal && i % 2 === 0 && "text-muted-foreground")}
                       >
                         {word}
                       </span>
@@ -119,15 +122,11 @@ export function SplitHeading({
 }
 
 export function SectionHead({
-  index,
-  eyebrow,
   title,
   sub,
   center,
   className,
 }: {
-  index?: string;
-  eyebrow: string;
   title: string;
   sub?: string;
   center?: boolean;
@@ -135,15 +134,9 @@ export function SectionHead({
 }) {
   return (
     <div className={cn("max-w-3xl", center && "mx-auto text-center", className)}>
-      <Reveal>
-        <p className="eyebrow">
-          {index && <span className="text-muted-foreground">{index}</span>}
-          {eyebrow}
-        </p>
-      </Reveal>
       <SplitHeading
         text={title}
-        className="mt-5 text-[2.6rem] sm:text-6xl lg:text-[4.25rem]"
+        className="text-[2.5rem] sm:text-[3.5rem] lg:text-[4.25rem]"
         delay={80}
       />
       {sub && (
@@ -176,17 +169,16 @@ export function CtaLink({
   arrow?: boolean;
 }) {
   const styles = {
-    primary:
-      "bg-primary text-primary-foreground shadow-[0_0_0_1px_oklch(1_0_0/0.1)_inset,0_10px_40px_-10px_oklch(0.87_0.13_178/0.55)] hover:shadow-[0_0_0_1px_oklch(1_0_0/0.2)_inset,0_14px_50px_-8px_oklch(0.87_0.13_178/0.75)] hover:-translate-y-0.5",
+    primary: "bg-primary text-primary-foreground hover:bg-[oklch(0.92_0.12_178)]",
     ghost:
-      "border border-white/15 bg-white/[0.03] text-foreground backdrop-blur-sm hover:border-primary/50 hover:bg-primary/[0.06] hover:text-primary",
+      "border border-white/20 text-foreground hover:border-foreground/60 hover:bg-white/[0.05]",
     light: "bg-foreground text-background hover:-translate-y-0.5 hover:bg-white",
   }[variant];
   return (
     <a
       href={href}
       className={cn(
-        "group/cta inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-tight transition-all duration-500 ease-out-expo",
+        "group/cta inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium tracking-tight transition-all duration-500 ease-out-expo",
         styles,
         className,
       )}

@@ -38,13 +38,11 @@ export function Loader() {
             pathLength={1}
           />
         </svg>
-        <p className="loader-word mt-6 font-display text-4xl tracking-tight">Velqora</p>
+        <p className="loader-word mt-6 display text-4xl">Velqora</p>
         <div className="mt-6 h-px w-40 overflow-hidden bg-white/10">
           <div className="loader-bar h-full w-full bg-gradient-to-r from-ember via-primary to-sky" />
         </div>
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-          Do caos à clareza
-        </p>
+        <p className="mt-4 text-sm text-muted-foreground">Do caos à clareza</p>
       </div>
     </div>
   );

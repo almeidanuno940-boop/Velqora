@@ -110,14 +110,8 @@ export function ContactForm() {
     children: string;
     optional?: boolean;
   }) => (
-    <label
-      htmlFor={htmlFor}
-      className="mb-2 block font-mono text-[11px] uppercase tracking-[0.14em] text-foreground/85"
-    >
-      {children}{" "}
-      {optional && (
-        <span className="normal-case tracking-normal text-muted-foreground">(opcional)</span>
-      )}
+    <label htmlFor={htmlFor} className="mb-2 block text-sm font-medium text-foreground/90">
+      {children} {optional && <span className="font-normal text-muted-foreground">(opcional)</span>}
     </label>
   );
 

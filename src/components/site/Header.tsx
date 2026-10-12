@@ -47,6 +47,14 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* Película por trás do cabeçalho: evita que o logótipo e os botões se sobreponham ao texto ao fazer scroll. */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[oklch(0.1_0.015_255/0.97)] via-[oklch(0.1_0.015_255/0.94)] to-[oklch(0.1_0.015_255/0.7)] backdrop-blur-md transition-opacity duration-500 [mask-image:linear-gradient(to_bottom,black_75%,transparent)]",
+          scrolled && !open ? "opacity-100" : "opacity-0",
+        )}
+      />
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
@@ -94,7 +102,7 @@ export function Header() {
           <a
             href="/#contacto"
             onClick={() => setOpen(false)}
-            className="hidden min-h-11 items-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-all duration-500 ease-out-expo hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_oklch(0.87_0.13_178/0.6)] sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-all duration-500 ease-out-expo hover:bg-[oklch(0.92_0.12_178)] sm:inline-flex"
           >
             Pedir demonstração
           </a>
@@ -125,10 +133,7 @@ export function Header() {
               className="group flex items-baseline gap-4 border-b border-white/[0.07] py-4 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:fill-mode-both"
               style={{ animationDelay: `${i * 40}ms`, animationDuration: "600ms" }}
             >
-              <span className="font-mono text-xs text-muted-foreground">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-display text-4xl tracking-tight transition-colors group-hover:text-primary">
+              <span className="display text-4xl transition-colors group-hover:text-primary">
                 {n.label}
               </span>
             </a>
