@@ -1,8 +1,22 @@
-import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react";
+import {
+  Component,
+  lazy,
+  Suspense,
+  useEffect,
+  useState,
+  type ComponentType,
+  type ReactNode,
+} from "react";
 import { detectTier, detectWebGL, startSceneTracking, type Tier } from "./store";
 import { SceneFallback } from "./SceneFallback";
 
-const Experience = lazy(() => import("./Experience"));
+// A cena só corre no browser. No build SSR o ramo do import é eliminado (import.meta.env.SSR é
+// constante), para o three.js não entrar na função do servidor: no runtime de funções do Netlify o
+// `three` é carregado por require() e a função rebentava com 500 em todas as páginas.
+const NoScene: ComponentType<{ tier: Tier; reduced: boolean }> = () => null;
+const Experience = lazy(() =>
+  import.meta.env.SSR ? Promise.resolve({ default: NoScene }) : import("./Experience"),
+);
 
 /** Instante mínimo (ms desde o início da navegação) para arrancar a cena: a intro do hero acaba por volta dos 2,5 s. */
 const SCENE_MIN_START_MS = 2600;
