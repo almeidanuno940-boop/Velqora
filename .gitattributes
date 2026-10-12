@@ -1,0 +1,8 @@
+* text=auto eol=lf
+
+# Binários: nunca converter fins de linha
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary
+*.webp binary
