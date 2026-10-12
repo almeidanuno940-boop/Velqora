@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
@@ -25,6 +25,10 @@ const FIELDS = [
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const inFlight = useRef(false);
+  // Antes de o React hidratar o formulário não tem handler: um envio nativo recarregaria a página com
+  // os dados pessoais no URL. Até lá o botão fica inativo (e o Enter não submete).
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   const {
     register,
     handleSubmit,
@@ -122,6 +126,7 @@ export function ContactForm() {
 
   return (
     <form
+      method="post"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
       className="panel relative space-y-5 p-6 sm:p-9"
@@ -293,7 +298,7 @@ export function ContactForm() {
       )}
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !ready}
         className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground transition-all duration-500 ease-out-expo hover:shadow-[0_12px_40px_-10px_oklch(0.87_0.13_178/0.7)] disabled:opacity-70"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" />}
